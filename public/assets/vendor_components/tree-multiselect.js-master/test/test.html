@@ -1,0 +1,51 @@
+<!DOCTYPE html5>
+<html>
+  <head>
+    <title>Tree Multiselect test</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta charset="UTF-8">
+
+    <style>
+      * {
+        font-family: sans-serif;
+      }
+    </style>
+    <link rel="stylesheet" href="../dist/jquery.tree-multiselect.css">
+
+    <script src="./vendor/jquery-1.11.3.min.js"></script>
+    <script src="./vendor/jquery-ui.min.js"></script>
+    <script src="../dist/jquery.tree-multiselect.js"></script>
+  </head>
+
+  <body>
+
+
+    <select id="test-select-4" multiple="multiple">
+      <option value="bandora" data-section="hidden stuff" selected data-index="1">baz1</option>
+      <option value="khas" data-section="hidden stuff" selected data-index="1">baz2</option>
+      <option value="zton" data-section="hidden stuff" selected data-index="1">baz3</option>
+      <option value="teras" data-section="hidden stuff" selected data-index="1">baz4</option>
+      <option value="quux1" data-section="section" selected data-index="1">quux1</option>
+      <option value="quux2" data-section="section" selected data-index="1">quux2</option>
+      <option value="quux3" data-section="section" selected data-index="1">quux3</option>
+      <option value="quux4" data-section="section" selected data-index="1">quux4</option>
+
+    </select>
+
+
+
+    <script type="text/javascript">
+   
+      var tree4 = $("#test-select-4").treeMultiselect({
+        allowBatchSelection: true,
+        enableSelectAll: true,
+        searchable: true,
+        sortable: true,
+        startCollapsed: false
+      });
+    </script>
+  </body>
+</html>
