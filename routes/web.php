@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CreateUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -32,5 +33,11 @@ Route::get('/logout', [LogoutController::class, 'index'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     // DASHBOARD ROUTE
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    // add user 
+    Route::get('/user/create', [CreateUserController::class, 'create'])->name('user.create');
+
+    // store user
+    Route::post('/user/store', [CreateUserController::class, 'store'])->name('user.store');
 
 });

@@ -102,6 +102,21 @@
              <span>Dashboard</span>
              </a>
           </li>
+          <li class="treeview">
+             <a href="#">
+             <i class="icon-Thunder-move"><span class="path1"></span><span class="path2"></span></i>
+             <span>Users</span>
+             <span class="pull-right-container">
+             <i class="fa fa-angle-right pull-right"></i>
+             </span>
+             </a>
+             <ul class="treeview-menu">
+                <li><a href="{{ route('user.create') }}"><i class="icon-Commit"><span class="path1"></span><span
+                   class="path2"></span></i>All Users</a></li>
+                <li><a href="{{ route('user.create') }}"><i class="icon-Commit"><span class="path1"></span><span
+                   class="path2"></span></i>Add User</a></li>
+             </ul>
+          </li>
        </ul>
        
     </section>
