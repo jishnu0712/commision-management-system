@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class CreateUserController extends Controller
 {
@@ -37,6 +38,14 @@ class CreateUserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+        // image upload
+        if ($request->hasFile('image')) {
+            $imageFile = $request->file('image');
+            $fileExtension = $imageFile->getClientOriginalExtension();
+            $customFilename = Str::random(40);
+            $imageFile->storeAs('public/profile_pic', $customFilename.'.'.$fileExtension);
+        }
+        
         // save data
         User::create([
             'name' => $request->name,
@@ -45,6 +54,7 @@ class CreateUserController extends Controller
             'mobile' => $request->mobile,
             'type' => 'user',
             'password' => bcrypt($request->password),
+            'image' => $request->hasFile('image') ? $customFilename.'.'.$fileExtension : 'profile_pic.png',
         ]);
         // redirect after save
         return redirect()->route('user.create')->with('success', 'User created successfully');
