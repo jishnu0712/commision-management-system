@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,10 +36,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
     // USER ROUTES 
-    Route::get('/users', [CreateUserController::class, 'index'])->name('user.index');
+    Route::get('/user', [CreateUserController::class, 'index'])->name('user.index');
     Route::get('/user/create', [CreateUserController::class, 'create'])->name('user.create');
     Route::post('/user/store', [CreateUserController::class, 'store'])->name('user.store');
     Route::post('/user/update', [CreateUserController::class, 'update'])->name('user.update');
     Route::get('/user/edit/{user_id}', [CreateUserController::class, 'edit'])->name('user.edit');
+
+    // DEPARTMENTS ROUTES 
+    Route::get('/department', [DepartmentController::class, 'index'])->name('department.index');
+    Route::get('/department/create', [DepartmentController::class, 'create'])->name('department.create');
+    Route::post('/department/store', [DepartmentController::class, 'store'])->name('department.store');
+    Route::post('/department/update', [DepartmentController::class, 'update'])->name('department.update');
+    Route::get('/department/edit/{department_id}', [DepartmentController::class, 'edit'])->name('department.edit');
 
 });
