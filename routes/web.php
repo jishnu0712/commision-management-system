@@ -34,10 +34,11 @@ Route::middleware(['auth'])->group(function () {
     // DASHBOARD ROUTE
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
-    // add user 
+    // USER ROUTES 
+    Route::get('/users', [CreateUserController::class, 'index'])->name('user.index');
     Route::get('/user/create', [CreateUserController::class, 'create'])->name('user.create');
-
-    // store user
     Route::post('/user/store', [CreateUserController::class, 'store'])->name('user.store');
+    Route::post('/user/update', [CreateUserController::class, 'update'])->name('user.update');
+    Route::get('/user/edit/{user_id}', [CreateUserController::class, 'edit'])->name('user.edit');
 
 });

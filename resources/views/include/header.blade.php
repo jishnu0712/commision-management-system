@@ -111,7 +111,7 @@
              </span>
              </a>
              <ul class="treeview-menu">
-                <li><a href="{{ route('user.create') }}"><i class="icon-Commit"><span class="path1"></span><span
+                <li><a href="{{ route('user.index') }}"><i class="icon-Commit"><span class="path1"></span><span
                    class="path2"></span></i>All Users</a></li>
                 <li><a href="{{ route('user.create') }}"><i class="icon-Commit"><span class="path1"></span><span
                    class="path2"></span></i>Add User</a></li>

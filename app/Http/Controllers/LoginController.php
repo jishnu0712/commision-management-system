@@ -31,7 +31,6 @@ class LoginController extends Controller
         if(Auth::attempt(['username' => $request->username, 'password' => $request->password], $rememberme)){
             $request->session()->regenerate();
             return redirect()->route('dashboard.index');
-            echo 'Loggedin successful';
         }else{
             return back()->with('error', 'Wrong Username or Password!');
         }
