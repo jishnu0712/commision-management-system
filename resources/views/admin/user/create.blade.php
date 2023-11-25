@@ -27,32 +27,34 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 control-label">Username</label>
                                                 <div class="col-sm-9">
-                                                    <textarea rows="5" class="form-control" name="username" placeholder="Username"></textarea>
+                                                    <input rows="5" class="form-control" name="username" placeholder="Username"/>
 
                                                     <span class="error">@error('username') {{ $message }} @enderror</span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-3 control-label">Phone <span class="input_required">*</span></label>
-                                                <div class="col-sm-9"><input type="number" step="any" name="phone" class="form-control @error('phone') is-invalid @enderror" required placeholder="phone">
-                                                    <span class="error">@error('phone') {{ $message }} @enderror</span>
+                                                <label class="col-sm-3 control-label">Mobile <span class="input_required">*</span></label>
+                                                <div class="col-sm-9"><input type="number" step="any" name="mobile" class="form-control @error('mobile') is-invalid @enderror" 
+                                                maxlength="10"
+                                                required placeholder="mobile">
+                                                    <span class="error">@error('mobile') {{ $message }} @enderror</span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 control-label">Email <span class="input_required">*</span></label>
-                                                <div class="col-sm-9"><input type="number" step="any" name="email" class="form-control @error('email') is-invalid @enderror" required placeholder="email">
+                                                <div class="col-sm-9"><input type="email" step="any" name="email" class="form-control @error('email') is-invalid @enderror" required placeholder="email">
                                                     <span class="error">@error('email') {{ $message }} @enderror</span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 control-label">Password <span class="input_required">*</span></label>
-                                                <div class="col-sm-9"><input type="number" step="any" name="password" class="form-control @error('password') is-invalid @enderror" required placeholder="password">
+                                                <div class="col-sm-9"><input type="password" step="any" name="password" class="form-control @error('password') is-invalid @enderror" required placeholder="password">
                                                     <span class="error">@error('password') {{ $message }} @enderror</span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 control-label">Confirm Password <span class="input_required">*</span></label>
-                                                <div class="col-sm-9"><input type="number" step="any" name="confirm_password" class="form-control @error('confirm_password') is-invalid @enderror" required placeholder="confirm_password">
+                                                <div class="col-sm-9"><input type="password" step="any" name="confirm_password" class="form-control @error('confirm_password') is-invalid @enderror" required placeholder="confirm_password">
                                                     <span class="error">@error('confirm_password') {{ $message }} @enderror</span>
                                                 </div>
                                             </div>
