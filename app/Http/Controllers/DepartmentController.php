@@ -59,7 +59,8 @@ class DepartmentController extends Controller
         return view('admin.department.edit', compact('department'));
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         // validate data
         $rules = [
             'dept_name' => 'required|string',
@@ -85,6 +86,5 @@ class DepartmentController extends Controller
         $user->save();
 
         return redirect()->route('department.edit', $request->department_id)->with('success', 'Department updated successfully');
-
     }
 }

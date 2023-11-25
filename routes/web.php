@@ -6,6 +6,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DoctorController;
+use App\Models\Doctor;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,5 +50,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/department/store', [DepartmentController::class, 'store'])->name('department.store');
     Route::post('/department/update', [DepartmentController::class, 'update'])->name('department.update');
     Route::get('/department/edit/{department_id}', [DepartmentController::class, 'edit'])->name('department.edit');
+
+    // DOCTOR ROUTES 
+    Route::get('/doctor', [DoctorController::class, 'index'])->name('doctor.index');
+    Route::get('/doctor/create', [DoctorController::class, 'create'])->name('doctor.create');
+    Route::post('/doctor/store', [DoctorController::class, 'store'])->name('doctor.store');
+    Route::post('/doctor/update', [DoctorController::class, 'update'])->name('doctor.update');
+    Route::get('/doctor/edit/{doctor_id}', [DoctorController::class, 'edit'])->name('doctor.edit');
 
 });
