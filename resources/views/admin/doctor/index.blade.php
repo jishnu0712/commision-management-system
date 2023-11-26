@@ -1,5 +1,5 @@
 <x-layout>
-    <x-slot name="title">Departments</x-slot>
+    <x-slot name="title">Doctors</x-slot>
     <x-slot name="content">
         <div class="content-wrapper">
             <div class="container-full">
@@ -7,7 +7,7 @@
                 <section class="content">
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-12" style="margin-bottom:15px;">
-                            <h3 style="float:left;">Departments</h3>
+                            <h3 style="float:left;">Doctors</h3>
                             <button onClick="add_new_banner()" type="button" class="waves-effect waves-light btn btn-light search_button" style="float: right;">Search</button>
                         </div>
                         <div id="add_new_banner" class="col-xl-12 col-lg-12 col-12">

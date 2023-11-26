@@ -8,10 +8,10 @@
                     @include('alert.alert')
                     <form method="post" id="addItemForm" action="{{ route('doctor.store') }}" enctype="multipart/form-data">
                         <div class="row">
-                            <div class="col-xl-8 col-12">
+                            <div class="col-xl-12 col-12">
                                 <div class="box">
                                     <div class="box-header with-border">
-                                        <h4 class="box-title">doctor Information</h4>
+                                        <h4 class="box-title">Add Doctor</h4>
                                     </div>
                                     <div class="box-body">
                                         <div class="box-body">
@@ -90,6 +90,20 @@
                                                     <textarea rows="5" class="form-control" name="address" placeholder="address">{{ old('address') }}</textarea>
                                                     <span class="error">@error('address') {{ $message }} @enderror</span>
                                                 </div>
+                                            </div>
+                                            <hr/>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h3>Add percentage (Department wise)</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                @foreach($departments as $department)
+                                                    <div class="col-md-3">
+                                                        <label class="control-label">{{ $department->dept_name }}</label>
+                                                        <input type="text" name="percentage[{{ $department->id }}]" class="form-control" placeholder="{{ $department->dept_name }} percentage" value="0">
+                                                    </div>
+                                                @endforeach
                                             </div>
 
                                         </div>

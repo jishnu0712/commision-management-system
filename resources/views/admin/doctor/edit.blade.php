@@ -8,7 +8,7 @@
                     @include('alert.alert')
                     <form method="post" id="addItemForm" action="{{ route('doctor.update') }}" enctype="multipart/form-data">
                         <div class="row">
-                            <div class="col-xl-8 col-12">
+                            <div class="col-xl-12 col-12">
                                 <div class="box">
                                     <div class="box-header with-border">
                                         <h4 class="box-title">Doctor Update</h4>
@@ -90,6 +90,22 @@
                                                     <textarea rows="5" class="form-control" name="address" placeholder="address">{{ $doctor->address }}</textarea>
                                                     <span class="error">@error('address') {{ $message }} @enderror</span>
                                                 </div>
+                                            </div>
+
+                                            <hr/>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h3>Update percentage (Department wise)</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                @foreach($percentages as $percentage)
+                                                {{-- {{ $percentage }} --}}
+                                                    <div class="col-md-3">
+                                                        <label class="control-label">{{ $percentage->department->dept_name }} (%)</label>
+                                                        <input type="text" name="percentage[{{ $percentage->id }}]" class="form-control" placeholder="{{ $percentage->department->dept_name }} percentage" value="{{ $percentage->percentage }}">
+                                                    </div>
+                                                @endforeach
                                             </div>
 
                                         </div>

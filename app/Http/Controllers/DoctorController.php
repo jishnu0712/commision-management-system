@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Doctor;
+use App\Models\Percentage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -31,7 +33,8 @@ class DoctorController extends Controller
 
     public function create()
     {
-        return view('admin.doctor.create');
+        $departments = Department::all();
+        return view('admin.doctor.create', compact('departments'));
     }
 
     public function store(Request $request)
@@ -68,7 +71,7 @@ class DoctorController extends Controller
         }
 
         // save data
-        Doctor::create([
+        $doctor = Doctor::create([
             'name' => $request->name,
             'email' => $request->email,
             'mobile' => $request->mobile,
@@ -78,6 +81,22 @@ class DoctorController extends Controller
             'specialization' => $request->specialization,
             'profile_pic' => $request->hasFile('profile_pic') ? $customFilename . '.' . $fileExtension : 'profile_pic.png',
         ]);
+
+        $doctor_id = $doctor->id;
+        $percentageData = [];
+        $dateTime = date('Y-m-d H:i:s');
+        foreach($request->percentage as $department_id => $value){
+            $tempArr = [];
+            $tempArr['doctor_id'] = $doctor_id;
+            $tempArr['dept_id'] = $department_id;
+            $tempArr['percentage'] = $value;
+            $tempArr['created_at'] = $dateTime;
+            $tempArr['updated_at'] = $dateTime;
+            $percentageData[] = $tempArr;
+        }
+
+        Percentage::insert($percentageData);
+
         // redirect after save
         return redirect()->route('doctor.create')->with('success', 'Doctor created successfully');
     }
@@ -90,7 +109,9 @@ class DoctorController extends Controller
             return back()->with('error', 'Invalid doctor ID!');
         }
         $doctor = Doctor::find($doctor_id);
-        return view('admin.doctor.edit', compact('doctor'));
+
+        $percentages = Percentage::where('doctor_id', $doctor_id)->with('department')->with('department.percentage')->get();
+        return view('admin.doctor.edit', compact('doctor', 'percentages'));
     }
 
     public function update(Request $request)
@@ -145,6 +166,12 @@ class DoctorController extends Controller
             $doctor->profile_pic = $customFilename . '.' . $fileExtension;
         }
         $doctor->save();
+
+        foreach($request->percentage as $percentage_id => $value){
+            $percentage = Percentage::find($percentage_id);
+            $percentage->percentage = $value;
+            $percentage->save();
+        }
         // redirect after save
         return redirect()->route('doctor.edit', $request->doctor_id)->with('success', 'Doctor updated successfully');
     }
