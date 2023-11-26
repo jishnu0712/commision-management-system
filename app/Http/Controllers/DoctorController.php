@@ -85,7 +85,7 @@ class DoctorController extends Controller
         $doctor_id = $doctor->id;
         $percentageData = [];
         $dateTime = date('Y-m-d H:i:s');
-        foreach($request->percentage as $department_id => $value){
+        foreach ($request->percentage as $department_id => $value) {
             $tempArr = [];
             $tempArr['doctor_id'] = $doctor_id;
             $tempArr['dept_id'] = $department_id;
@@ -108,9 +108,15 @@ class DoctorController extends Controller
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
             return back()->with('error', 'Invalid Doctor ID!');
         }
-        $doctor = Doctor::find($doctor_id);
 
-        $percentages = Percentage::where('doctor_id', $doctor_id)->with('department')->with('department.percentage')->get();
+        try {
+            $this->syncDepartment($doctor_id);
+            $doctor = Doctor::find($doctor_id);
+            $percentages = Percentage::where('doctor_id', $doctor_id)->with('department')->with('department.percentage')->get();
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+        
         return view('admin.doctor.edit', compact('doctor', 'percentages'));
     }
 
@@ -167,7 +173,7 @@ class DoctorController extends Controller
         }
         $doctor->save();
 
-        foreach($request->percentage as $percentage_id => $value){
+        foreach ($request->percentage as $percentage_id => $value) {
             $percentage = Percentage::find($percentage_id);
             $percentage->percentage = $value;
             $percentage->save();
@@ -176,24 +182,18 @@ class DoctorController extends Controller
         return redirect()->route('doctor.edit', $request->doctor_id)->with('success', 'Doctor updated successfully');
     }
 
-    public function sync(Request $request, $doctor_id){
-        try {
-            $doctor_id = decrypt($request->doctor_id);
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            return back()->with('error', 'Invalid Doctor ID!');
-        }
+    public function syncDepartment($doctor_id)
+    {
+
         $percentageDept = Percentage::where('doctor_id', $doctor_id)->pluck('dept_id')->toArray();
 
         $departments = Department::whereNotIn('id', $percentageDept)->get();
-        foreach($departments as $department){
+        foreach ($departments as $department) {
             $percentage = new Percentage();
             $percentage->doctor_id = $doctor_id;
             $percentage->dept_id = $department->id;
             $percentage->percentage = 0;
             $percentage->save();
         }
-
-        return redirect()->route('doctor.edit', $request->doctor_id)->with('success', 'Department sync successfully');
-
     }
 }
