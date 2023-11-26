@@ -106,7 +106,7 @@ class DoctorController extends Controller
         try {
             $doctor_id = decrypt($doctor_id);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            return back()->with('error', 'Invalid doctor ID!');
+            return back()->with('error', 'Invalid Doctor ID!');
         }
         $doctor = Doctor::find($doctor_id);
 
@@ -143,7 +143,7 @@ class DoctorController extends Controller
         try {
             $doctor_id = decrypt($request->doctor_id);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            return back()->with('error', 'Invalid User ID!');
+            return back()->with('error', 'Invalid Doctor ID!');
         }
 
         // image upload
@@ -174,5 +174,26 @@ class DoctorController extends Controller
         }
         // redirect after save
         return redirect()->route('doctor.edit', $request->doctor_id)->with('success', 'Doctor updated successfully');
+    }
+
+    public function sync(Request $request, $doctor_id){
+        try {
+            $doctor_id = decrypt($request->doctor_id);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return back()->with('error', 'Invalid Doctor ID!');
+        }
+        $percentageDept = Percentage::where('doctor_id', $doctor_id)->pluck('dept_id')->toArray();
+
+        $departments = Department::whereNotIn('id', $percentageDept)->get();
+        foreach($departments as $department){
+            $percentage = new Percentage();
+            $percentage->doctor_id = $doctor_id;
+            $percentage->dept_id = $department->id;
+            $percentage->percentage = 0;
+            $percentage->save();
+        }
+
+        return redirect()->route('doctor.edit', $request->doctor_id)->with('success', 'Department sync successfully');
+
     }
 }
