@@ -127,6 +127,14 @@
                <li><a href="{{ route('doctor.create') }}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Add Doctor</a></li>
             </ul>
          </li>
+
+         <li>
+            <a href="{{ route('transaction.create') }}">
+               <i class="icon-Layout-4-blocks"><span class="path1"></span><span class="path2"></span></i>
+               <span>Transaction</span>
+            </a>
+         </li>
+
       </ul>
 
    </section>

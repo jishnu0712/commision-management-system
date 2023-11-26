@@ -7,6 +7,7 @@ use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\TransactionController;
 use App\Models\Doctor;
 
 /*
@@ -58,5 +59,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/doctor/update', [DoctorController::class, 'update'])->name('doctor.update');
     Route::get('/doctor/edit/{doctor_id}', [DoctorController::class, 'edit'])->name('doctor.edit');
     Route::get('/doctor/sync/{doctor_id}', [DoctorController::class, 'sync'])->name('doctor.sync');
+
+    // TRANSACTION ROUTES 
+    Route::get('/transaction', [TransactionController::class, 'index'])->name('transaction.index');
+    Route::get('/transaction/create', [TransactionController::class, 'create'])->name('transaction.create');
+    Route::post('/transaction/store', [TransactionController::class, 'store'])->name('transaction.store');
+    Route::post('/transaction/update', [TransactionController::class, 'update'])->name('transaction.update');
+    Route::get('/transaction/department', [TransactionController::class, 'department'])->name('transaction.department');
+    Route::get('/transaction/sync/{doctor_id}', [TransactionController::class, 'sync'])->name('transaction.sync');
 
 });
