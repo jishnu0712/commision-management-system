@@ -49,8 +49,10 @@
     {{-- <script src="{{ asset('assets/custom/js/pages/dashboard.js') }}"></script>    --}}
     {{-- <script src="{{ asset('assets/custom/js/pages/calendar-dash.js') }}"></script> --}}
     <script src="{{ asset('assets/chart/chart.js') }}"></script>
+    <script src="{{ asset('assets/Chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('assets/Chart.js/chartjs-script.js') }}"></script>
 
-    <script>
+    {{-- <script>
         let isProduction = {{ env('APP_ENV', true) == 'production' ? true : false }};
 
         if(isProduction) {
@@ -77,7 +79,7 @@
             locale: 'en',
             dateFormat: "m/d/Y",
         });
-    </script>
+    </script> --}}
     <!-- mian js -->
     <script src="{{ asset('assets/custom/js/main.softnicrms.min.js') }}"></script>
     <script>
@@ -94,34 +96,34 @@
         }
     </script>
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker
-                .register("{{ asset('assets/custom/sw.js') }}")
-                .then(() => {
-                    console.log('Service Worker Registered');
-                });
-        }
+        // if ('serviceWorker' in navigator) {
+        //     navigator.serviceWorker
+        //         .register("{{ asset('assets/custom/sw.js') }}")
+        //         .then(() => {
+        //             console.log('Service Worker Registered');
+        //         });
+        // }
 
-        let deferredPrompt;
+        // let deferredPrompt;
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            addBtn.style.display = 'block';
+        // window.addEventListener('beforeinstallprompt', (e) => {
+        //     e.preventDefault();
+        //     deferredPrompt = e;
+        //     addBtn.style.display = 'block';
 
-            addBtn.addEventListener('click', () => {
-                addBtn.style.display = 'none';
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the A2HS prompt');
-                    } else {
-                        console.log('User dismissed the A2HS prompt');
-                    }
-                    deferredPrompt = null;
-                });
-            });
-        });
+        //     addBtn.addEventListener('click', () => {
+        //         addBtn.style.display = 'none';
+        //         deferredPrompt.prompt();
+        //         deferredPrompt.userChoice.then((choiceResult) => {
+        //             if (choiceResult.outcome === 'accepted') {
+        //                 console.log('User accepted the A2HS prompt');
+        //             } else {
+        //                 console.log('User dismissed the A2HS prompt');
+        //             }
+        //             deferredPrompt = null;
+        //         });
+        //     });
+        // });
     </script>
     <script>
         $(document).ready(function() {

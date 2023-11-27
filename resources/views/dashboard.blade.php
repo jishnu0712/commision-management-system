@@ -55,6 +55,80 @@
 
                                 </div>
                             </div> --}}
+                            <div class="col-12">
+                                {{-- error --}}
+                                <div class="box">
+                                    <div class="box-body">
+                                        <div class="table-responsive-ipad overflow-auto">
+                                            <table class="table table-striped table-hover">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Profile Pic</th>
+                                                        <th>Name</th>
+                                                        <th>Hospital Name</th>
+                                                        <th>Chart</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="sortable_art">
+                                                    @foreach ($doctors as $key => $doctor)
+                                                        <tr>
+                                                            <td data-title="Sl No">
+                                                                <a href="javascript:;">
+                                                                    <button type="button"
+                                                                        class="waves-effect waves-light btn btn-primary">{{ ($doctors->currentPage() - 1) * $doctors->perPage() + $loop->iteration }}</button>
+                                                                </a>
+                                                            </td>
+                                                            <td data-title="img">
+                                                                <img width="80" alt="Profile pic"
+                                                                    src="{{ asset('storage/doctors/profile_pic/' . $doctor->profile_pic) }}">
+                                                            </td>
+                                                            <td data-title="name">{{ $doctor->name }}</td>
+
+                                                            <td data-title="description">
+                                                                {{ $doctor->hospital_name }}
+                                                            </td>
+                                                            <td data-title="description">
+                                                                <canvas id="AreaChart{{ $key + 1 }}"
+                                                                    height="110"></canvas>
+                                                            </td>
+
+                                                            <td data-title="Action">
+                                                                <a href="{{ route('doctor.edit', ['doctor_id' => encrypt($doctor->id)]) }}"
+                                                                    class="btn btn-primary"><i
+                                                                        class='fa fa-edit'></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- pagination -->
+                                        <div class="row mt-20">
+                                            <div class="col-sm-12 col-md-5 d-flex flex-column-reverse">
+                                                <div class="dataTables_info" id="example5_info" role="status"
+                                                    aria-live="polite">
+                                                    {{-- @if ($doctors->lastPage() > 1) --}}
+                                                    <p class="text-center text-muted float-left">
+                                                        Showing {{ $doctors->firstItem() }} to
+                                                        {{ $doctors->lastItem() }} of
+                                                        {{ $doctors->total() }} entries
+                                                    </p>
+                                                    {{-- @endif --}}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-7">
+                                                <div class="dataTables_paginate paging_simple_numbers">
+                                                    {{ $doctors->appends(request()->query())->links('pagination::bootstrap-4') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- ./pagination./ -->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -62,27 +136,33 @@
             </div>
         </div>
         <x-slot name="javascript">
-            {{-- <script>
-                const ctx = document.getElementById('myChart');
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: {!! $chartMonths !!},
-                        datasets: [{
-                            label: 'Total - ',
-                            data: {!! $chartTotalAmount !!},
-                            borderWidth: 2
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
+            <script>
+                let count = {{ count($doctors) }};
+                for (let i = 1; i <= count; i++) {
+                    if ($(`#AreaChart${i}`).length) {
+                        var ctx = document.getElementById(`AreaChart${i}`).getContext('2d');
+
+                        var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
+                        gradientStroke1.addColorStop(0, '#4facfe');
+                        gradientStroke1.addColorStop(1, '#00f2fe');
+
+                        var myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+                                    'Dec'],
+                                datasets: [{
+                                    label: 'Revenue',
+                                    data: [10, 8, 6, 5, 12, 8, 16, 17, 6, 7, 6, 10, 0],
+                                    backgroundColor: 'rgba(94, 114, 228, 0.3)',
+                                    borderColor: '#5e72e4',
+                                    borderWidth: 3
+                                }]
                             }
-                        }
+                        });
                     }
-                });
-            </script> --}}
+                }
+            </script>
 
         </x-slot>
     </x-slot>

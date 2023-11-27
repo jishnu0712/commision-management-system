@@ -6,7 +6,7 @@
                 <!-- Main content -->
                 <section class="content">
                     @include('alert.alert')
-                    <form method="post" id="addItemForm" action="{{ route('doctor.store') }}"
+                    <form method="post" id="addItemForm" action="{{ route('transaction.store') }}"
                         enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-xl-12 col-12">
@@ -19,11 +19,11 @@
                                             @csrf
 
                                             <div class="row col-md-12">
-                                                <div class="col-sm-8">
+                                                <div class="col-sm-4">
                                                     <div class="form-group">
                                                         <label class="control-label">Select Doctor<span
                                                                 class="input_required">*</span></label>
-                                                        <select name="doctor" class="select2" required
+                                                        <select name="doctor_id" class="select2" required
                                                             id="doctorDropdown">
                                                             <option value="">Select Doctor</option>
                                                             @foreach ($doctors as $doctor)
@@ -35,10 +35,28 @@
                                                         </select>
                                                     </div>
                                                 </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Bill No</label>
+                                                        <input type="text" name="bill_no" class="form-control"
+                                                            required placeholder="Bill No">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Bill Date</label>
+                                                        <input type="date" name="bill_date" class="form-control"
+                                                            required placeholder="Bill Date">
+                                                    </div>
+                                                </div>
+
                                             </div>
+                                            <hr />
 
                                             <div class="row col-md-12 item_repeter_content">
-                                                <div class="col-md-4">
+                                                <div class="col-md-5">
                                                     <div class="form-group">
                                                         <label>Select Department</label>
                                                         <select class="form-control select2 departmentDropdown"
@@ -48,31 +66,15 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-3">
+                                                <div class="col-md-5">
                                                     <div class="form-group">
                                                         <label>Amount</label>
                                                         <input type="number" name="amount[]" class="form-control"
                                                             placeholder="Amount" required>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-group">
-                                                        <label>Bill No</label>
-                                                        <input type="text" name="bill_no[]" class="form-control"
-                                                             required
-                                                            placeholder="Bill No">
-                                                    </div>
-                                                </div>
 
                                                 <div class="col-md-2">
-                                                    <div class="form-group">
-                                                        <label>Bill Date</label>
-                                                        <input type="date" name="bill_date[]" class="form-control" required
-                                                            placeholder="Bill Date">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-1">
                                                     <div class="form-group">
                                                         <label class="row action_name">Add</label>
                                                         <button type="button" id="addProToTbL"

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Percentage;
+use App\Models\Transaction;
 
 class Department extends Model
 {
@@ -15,5 +16,10 @@ class Department extends Model
     public function percentage()
     {
         return $this->hasMany(Percentage::class, 'dept_id');
+    }
+
+    public function transaction()
+    {
+        return $this->hasMany(Transaction::class, 'dept_id');
     }
 }

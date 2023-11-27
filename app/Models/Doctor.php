@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Percentage;
+use App\Models\Bill;
 
 class Doctor extends Model
 {
@@ -16,5 +17,10 @@ class Doctor extends Model
     public function percentage()
     {
         return $this->hasMany(Percentage::class);
+    }
+
+    public function bill()
+    {
+        return $this->hasMany(Bill::class);
     }
 }
