@@ -64,4 +64,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaction', [TransactionController::class, 'index'])->name('transaction.index');
     Route::get('/transaction/create', [TransactionController::class, 'create'])->name('transaction.create');
     Route::post('/transaction/store', [TransactionController::class, 'store'])->name('transaction.store');
+    Route::get('/transaction/department', [TransactionController::class, 'department'])->name('transaction.department');
 });

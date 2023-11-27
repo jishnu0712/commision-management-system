@@ -39,11 +39,16 @@ class TransactionController extends Controller
             // ADD TRANSACTION
             $transactions = [];
 
-            foreach ($request->department as $index => $dept) {
+            foreach ($request->department as $index => $dept_id) {
+                $percentage = Percentage::select('percentage')
+                    ->where('dept_id', $dept_id)
+                    ->where('doctor_id', $request->doctor_id)
+                    ->first();
                 $transactions[] = [
-                    'dept_id' => $dept,
+                    'dept_id' => $dept_id,
                     'bill_id' => $bill_id,
                     'amount' => $request->amount[$index],
+                    'percentage' => $percentage->percentage,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
