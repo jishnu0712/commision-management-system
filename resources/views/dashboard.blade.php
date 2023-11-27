@@ -29,7 +29,7 @@
                             <!-- ./ ORDER INFORMATION ./ -->
                             <!-- INVOICE INFORMATION -->
                             <div class="col-xl-12 col-lg-12 col-12 pl-5">
-                                {{-- <h3>Commition Chart </h3> --}}
+                                {{-- <h3>Commission Chart </h3> --}}
                             </div>
                             {{-- <div class="row">
                                 <x-admin-dashboard-o-invoice-card title="Total Invoice" :amount="$orders->completed_orders"
@@ -77,7 +77,7 @@
                                                             <tr>
                                                                 <td data-title="Sl No">
                                                                     <a
-                                                                        href="{{ route('doctor.edit', ['doctor_id' => encrypt($doctor->id)]) }}">
+                                                                        href="{{ route('transaction.view', ['doctor_id' => encrypt($doctor->id)]) }}">
                                                                         <button type="button"
                                                                             class="waves-effect waves-light btn btn-primary">{{ ($doctors->currentPage() - 1) * $doctors->perPage() + $loop->iteration }}</button>
                                                                     </a>

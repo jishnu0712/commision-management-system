@@ -60,4 +60,20 @@ class TransactionController extends Controller
 
         return redirect()->route('transaction.create')->with('success', 'Transaction saved successfully');
     }
+
+    public function view($doctor_id)
+    {
+        // Get all transaction details using doctor_id
+
+        try {
+            $doctor_id = decrypt($doctor_id);
+            $doctor = Doctor::find($doctor_id);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return back()->with('error', 'Invalid Doctor ID!');
+        }
+
+        // get 12 months revenue, grouped by month
+        
+        return view('admin.transaction.view', compact('doctor'));
+    }
 }
