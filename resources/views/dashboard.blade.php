@@ -9,7 +9,7 @@
                         <div class="col-xl-12 col-12">
                             <!-- INVOICE INFORMATION -->
                             <div class="col-xl-12 col-lg-12 col-12 pl-5">
-                                <h3>Commition Information</h3>
+                                <h3>Commission Information</h3>
                             </div>
                             <div class="row">
 
@@ -55,77 +55,80 @@
 
                                 </div>
                             </div> --}}
-                            <div class="col-12">
-                                {{-- error --}}
-                                <div class="box">
-                                    <div class="box-body">
-                                        <div class="table-responsive-ipad overflow-auto">
-                                            <table class="table table-striped table-hover">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Profile Pic</th>
-                                                        <th>Name</th>
-                                                        <th>Hospital Name</th>
-                                                        <th>Chart</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="sortable_art">
-                                                    @foreach ($doctors as $key => $doctor)
+                            <div class="row">
+                                <div class="col-12">
+                                    {{-- error --}}
+                                    <div class="box">
+                                        <div class="box-body">
+                                            <div class="table-responsive-ipad overflow-auto">
+                                                <table class="table table-striped table-hover">
+                                                    <thead class="thead-light">
                                                         <tr>
-                                                            <td data-title="Sl No">
-                                                                <a href="javascript:;">
-                                                                    <button type="button"
-                                                                        class="waves-effect waves-light btn btn-primary">{{ ($doctors->currentPage() - 1) * $doctors->perPage() + $loop->iteration }}</button>
-                                                                </a>
-                                                            </td>
-                                                            <td data-title="img">
-                                                                <img width="80" alt="Profile pic"
-                                                                    src="{{ asset('storage/doctors/profile_pic/' . $doctor->profile_pic) }}">
-                                                            </td>
-                                                            <td data-title="name">{{ $doctor->name }}</td>
-
-                                                            <td data-title="description">
-                                                                {{ $doctor->hospital_name }}
-                                                            </td>
-                                                            <td data-title="description">
-                                                                <canvas id="AreaChart{{ $key + 1 }}"
-                                                                    height="110"></canvas>
-                                                            </td>
-
-                                                            <td data-title="Action">
-                                                                <a href="{{ route('doctor.edit', ['doctor_id' => encrypt($doctor->id)]) }}"
-                                                                    class="btn btn-primary"><i
-                                                                        class='fa fa-edit'></i></a>
-                                                            </td>
+                                                            <th>ID</th>
+                                                            <th>Profile Pic</th>
+                                                            <th>Name</th>
+                                                            <th>Hospital Name</th>
+                                                            <th class="text-center">Chart</th>
+                                                            {{-- <th>Action</th> --}}
                                                         </tr>
-                                                    @endforeach
+                                                    </thead>
+                                                    <tbody id="sortable_art">
+                                                        @foreach ($doctors as $key => $doctor)
+                                                            <tr>
+                                                                <td data-title="Sl No">
+                                                                    <a
+                                                                        href="{{ route('doctor.edit', ['doctor_id' => encrypt($doctor->id)]) }}">
+                                                                        <button type="button"
+                                                                            class="waves-effect waves-light btn btn-primary">{{ ($doctors->currentPage() - 1) * $doctors->perPage() + $loop->iteration }}</button>
+                                                                    </a>
+                                                                </td>
+                                                                <td data-title="img">
+                                                                    <img width="80" alt="Profile pic"
+                                                                        src="{{ asset('storage/doctors/profile_pic/' . $doctor->profile_pic) }}">
+                                                                </td>
+                                                                <td data-title="name">{{ $doctor->name }}</td>
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!-- pagination -->
-                                        <div class="row mt-20">
-                                            <div class="col-sm-12 col-md-5 d-flex flex-column-reverse">
-                                                <div class="dataTables_info" id="example5_info" role="status"
-                                                    aria-live="polite">
-                                                    {{-- @if ($doctors->lastPage() > 1) --}}
-                                                    <p class="text-center text-muted float-left">
-                                                        Showing {{ $doctors->firstItem() }} to
-                                                        {{ $doctors->lastItem() }} of
-                                                        {{ $doctors->total() }} entries
-                                                    </p>
-                                                    {{-- @endif --}}
+                                                                <td data-title="hospital_name">
+                                                                    {{ $doctor->hospital_name }}
+                                                                </td>
+                                                                <td data-title="chart">
+                                                                    <canvas id="AreaChart{{ $key + 1 }}"
+                                                                        height="110"></canvas>
+                                                                </td>
+
+                                                                {{-- <td data-title="Action">
+                                                                    <a href="{{ route('doctor.edit', ['doctor_id' => encrypt($doctor->id)]) }}"
+                                                                        class="btn btn-primary"><i
+                                                                            class='fa fa-edit'></i></a>
+                                                                </td> --}}
+                                                            </tr>
+                                                        @endforeach
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- pagination -->
+                                            <div class="row mt-20">
+                                                <div class="col-sm-12 col-md-5 d-flex flex-column-reverse">
+                                                    <div class="dataTables_info" id="example5_info" role="status"
+                                                        aria-live="polite">
+                                                        {{-- @if ($doctors->lastPage() > 1) --}}
+                                                        <p class="text-center text-muted float-left">
+                                                            Showing {{ $doctors->firstItem() }} to
+                                                            {{ $doctors->lastItem() }} of
+                                                            {{ $doctors->total() }} entries
+                                                        </p>
+                                                        {{-- @endif --}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-7">
+                                                    <div class="dataTables_paginate paging_simple_numbers">
+                                                        {{ $doctors->appends(request()->query())->links('pagination::bootstrap-4') }}
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 col-md-7">
-                                                <div class="dataTables_paginate paging_simple_numbers">
-                                                    {{ $doctors->appends(request()->query())->links('pagination::bootstrap-4') }}
-                                                </div>
-                                            </div>
+                                            <!-- ./pagination./ -->
                                         </div>
-                                        <!-- ./pagination./ -->
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +153,8 @@
                             type: 'line',
                             data: {
                                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-                                    'Dec'],
+                                    'Dec'
+                                ],
                                 datasets: [{
                                     label: 'Revenue',
                                     data: [10, 8, 6, 5, 12, 8, 16, 17, 6, 7, 6, 10, 0],
