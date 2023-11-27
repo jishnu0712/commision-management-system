@@ -92,7 +92,7 @@
                                                                     {{ $doctor->hospital_name }}
                                                                 </td>
                                                                 <td data-title="chart">
-                                                                    <canvas id="AreaChart{{ $key + 1 }}"
+                                                                    <canvas id="AreaChart{{ $doctor->id }}"
                                                                         height="110"></canvas>
                                                                 </td>
 
@@ -139,11 +139,10 @@
             </div>
         </div>
         <x-slot name="javascript">
-            <script>
-                let count = {{ count($doctors) }};
-                for (let i = 1; i <= count; i++) {
-                    if ($(`#AreaChart${i}`).length) {
-                        var ctx = document.getElementById(`AreaChart${i}`).getContext('2d');
+            @foreach ($doctors as $key => $doctor)
+                <script>
+                    if ($("#AreaChart{{ $doctor->id }}").length) {
+                        var ctx = document.getElementById("AreaChart{{ $doctor->id }}").getContext('2d');
 
                         var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
                         gradientStroke1.addColorStop(0, '#4facfe');
@@ -152,12 +151,10 @@
                         var myChart = new Chart(ctx, {
                             type: 'line',
                             data: {
-                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-                                    'Dec'
-                                ],
+                                labels: {!! $monthsArr[$doctor->id] !!},
                                 datasets: [{
                                     label: 'Revenue',
-                                    data: [10, 8, 6, 5, 12, 8, 16, 17, 6, 7, 6, 10, 0],
+                                    data: {!! $commissionsArr[$doctor->id] !!},
                                     backgroundColor: 'rgba(94, 114, 228, 0.3)',
                                     borderColor: '#5e72e4',
                                     borderWidth: 3
@@ -165,8 +162,9 @@
                             }
                         });
                     }
-                }
-            </script>
+                    
+                </script>
+            @endforeach
 
         </x-slot>
     </x-slot>

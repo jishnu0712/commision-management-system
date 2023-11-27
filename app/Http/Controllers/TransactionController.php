@@ -9,6 +9,7 @@ use App\Models\Doctor;
 use App\Models\Percentage;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -49,7 +50,7 @@ class TransactionController extends Controller
                     'bill_id' => $bill_id,
                     'amount' => $request->amount[$index],
                     'percentage' => $percentage->percentage,
-                    'commission' => ($request->amount[$index] * $percentage->percentage)/100,
+                    'commission' => ($request->amount[$index] * $percentage->percentage) / 100,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
@@ -73,7 +74,25 @@ class TransactionController extends Controller
         }
 
         // get 12 months revenue, grouped by month
-        
-        return view('admin.transaction.view', compact('doctor'));
+        $currentYear = date('Y');
+        $transactions = Transaction::select(
+            DB::raw('SUM(transactions.amount) as total_amount'),
+            DB::raw('SUM(transactions.commission) as commission'),
+            DB::raw('MONTHNAME(bills.bill_date) as month')
+        )
+            ->leftJoin('bills', 'bills.id', '=', 'transactions.bill_id')
+            ->where('bills.doctor_id', $doctor_id)
+            ->whereYear('bills.bill_date', $currentYear)
+            ->groupBy(DB::raw('MONTHNAME(bills.bill_date)'))
+            ->groupBy('bills.bill_date')
+            ->orderBy(DB::raw('MONTH(bills.bill_date)'))
+            ->get();
+
+        $commissions = $transactions->pluck('commission')->all();
+        $commissions = json_encode($commissions);
+        $months = $transactions->pluck('month')->all();
+        $months = json_encode($months);
+
+        return view('admin.transaction.view', compact('doctor', 'commissions', 'months'));
     }
 }
