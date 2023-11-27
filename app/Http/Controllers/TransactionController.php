@@ -49,6 +49,7 @@ class TransactionController extends Controller
                     'bill_id' => $bill_id,
                     'amount' => $request->amount[$index],
                     'percentage' => $percentage->percentage,
+                    'commission' => ($request->amount[$index] * $percentage->percentage)/100,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
