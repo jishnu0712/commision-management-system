@@ -41,13 +41,13 @@
                </a>
                <ul class="dropdown-menu animated flipInX">
                   <li class="user-body">
-                     <a class="dropdown-item " href="{{ Route::has('profile.index') ? route('profile.index') : '/profile' }}"><i class="ti-user text-muted mr-2"></i> Profile</a>
+                     {{-- <a class="dropdown-item " href="{{ Route::has('profile.index') ? route('profile.index') : '/profile' }}"><i class="ti-user text-muted mr-2"></i> Profile</a> --}}
 
-                     <a class="dropdown-item" href="/password"><i class="ti-wallet text-muted mr-2"></i> Change
+                     <a class="dropdown-item" href="{{ route('password.index') }}"><i class="ti-wallet text-muted mr-2"></i> Change
                         Password</a>
-                     <a class="dropdown-item" href="/settings"><i class="ti-settings text-muted mr-2"></i>
-                        Settings</a>
-                     <a class="dropdown-item" target="_blank" href="javascript:void(0);"><i class="ti-help text-muted mr-2"></i> Help</a>
+                     {{-- <a class="dropdown-item" href="/settings"><i class="ti-settings text-muted mr-2"></i>
+                        Settings</a> --}}
+                     {{-- <a class="dropdown-item" target="_blank" href="javascript:void(0);"><i class="ti-help text-muted mr-2"></i> Help</a> --}}
                      <div class="dropdown-divider"></div>
                      <a class="dropdown-item text-danger" href="/logout"><i class="ti-lock text-muted mr-2 text-danger"></i>
                         Logout</a>
