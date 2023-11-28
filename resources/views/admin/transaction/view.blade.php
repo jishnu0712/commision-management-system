@@ -8,9 +8,7 @@
                     <div class="row">
                         <div class="col-xl-12 col-12">
                             <!-- INVOICE INFORMATION -->
-                            <div class="col-xl-12 col-lg-12 col-12 pl-5">
-                                <h3>Commission Chart </h3>
-                            </div>
+                            
                             <div class="row">
                                 <div class="col-12">
                                     {{-- error --}}
@@ -33,6 +31,10 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="col-xl-12 col-lg-12 col-12 pl-5">
+                                <h3>Commission Chart </h3>
                             </div>
                             <div class="row">
                                 <div class="col-12">
@@ -81,7 +83,7 @@
                         data: {
                             labels: {!! $months !!},
                             datasets: [{
-                                label: 'Revenue',
+                                label: 'Commission',
                                 data: {!! $commissions !!},
                                 backgroundColor: 'rgba(94, 114, 228, 0.3)',
                                 borderColor: '#5e72e4',
