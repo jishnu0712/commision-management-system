@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/doctor/store', [DoctorController::class, 'store'])->name('doctor.store');
     Route::post('/doctor/update', [DoctorController::class, 'update'])->name('doctor.update');
     Route::get('/doctor/edit/{doctor_id}', [DoctorController::class, 'edit'])->name('doctor.edit');
+    Route::post('/doctor/payment', [DoctorController::class, 'payment'])->name('doctor.payment');
 
     // TRANSACTION ROUTES 
     Route::get('/transaction', [TransactionController::class, 'index'])->name('transaction.index');

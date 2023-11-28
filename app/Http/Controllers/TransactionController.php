@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bill;
 use App\Models\Department;
 use App\Models\Doctor;
+use App\Models\DoctorPayment;
 use App\Models\Percentage;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -78,7 +79,8 @@ class TransactionController extends Controller
         $transactions = Transaction::select(
             DB::raw('SUM(transactions.amount) as total_amount'),
             DB::raw('SUM(transactions.commission) as commission'),
-            DB::raw('MONTHNAME(bills.bill_date) as month')
+            DB::raw('MONTHNAME(bills.bill_date) as month'),
+            DB::raw('DATE_FORMAT(bills.bill_date, "%Y-%m")  as month_year'),
         )
             ->leftJoin('bills', 'bills.id', '=', 'transactions.bill_id')
             ->where('bills.doctor_id', $doctor_id)
@@ -97,6 +99,11 @@ class TransactionController extends Controller
         $months = $transactions->pluck('month')->all();
         $months = json_encode($months);
 
-        return view('admin.transaction.view', compact('doctor', 'commissions', 'months', 'totalAmount'));
+
+        // CHECK IS PAYMENT
+        $payments = DoctorPayment::where('doctor_id', $doctor_id)->where('year',$currentYear);
+        $payments = $payments->pluck('month')->all();
+
+        return view('admin.transaction.view', compact('payments', 'transactions', 'doctor', 'commissions', 'months', 'totalAmount'));
     }
 }

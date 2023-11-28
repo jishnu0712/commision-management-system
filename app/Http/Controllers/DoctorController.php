@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Models\Doctor;
+use App\Models\DoctorPayment;
 use App\Models\Percentage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -195,5 +196,14 @@ class DoctorController extends Controller
             $percentage->percentage = 0;
             $percentage->save();
         }
+    }
+
+    public function payment(Request $request){
+        $payment = new DoctorPayment();
+        $payment->doctor_id = $request->doctor_id;
+        $payment->year = date('Y', strtotime($request->month_year));
+        $payment->month = date('m', strtotime($request->month_year));
+        $payment->save();
+        return response()->json(['status' => 'success', 'msg' => 'Payment completed successfully.']);
     }
 }
