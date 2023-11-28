@@ -90,9 +90,13 @@ class TransactionController extends Controller
 
         $commissions = $transactions->pluck('commission')->all();
         $commissions = json_encode($commissions);
+
+        $totalAmount = $transactions->pluck('total_amount')->all();
+        $totalAmount = json_encode($totalAmount);
+
         $months = $transactions->pluck('month')->all();
         $months = json_encode($months);
 
-        return view('admin.transaction.view', compact('doctor', 'commissions', 'months'));
+        return view('admin.transaction.view', compact('doctor', 'commissions', 'months', 'totalAmount'));
     }
 }

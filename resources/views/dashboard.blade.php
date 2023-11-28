@@ -132,6 +132,24 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- ./ INVOICE INFORMATION ./ -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="box">
+                                        <div class="box-body py-0">
+                                            <div class="col-xl-12 col-lg-12 col-12 pl-5">
+                                                <h3>Revenue & Commission of -  {{ date('Y') }}</h3>
+                                            </div>
+                                            <hr/>
+                                            <div class="d-flex justify-content-between align-items-center p-20">
+                                                <canvas id="barChart" height="110"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -153,7 +171,7 @@
                             data: {
                                 labels: months,
                                 datasets: [{
-                                    label: 'Revenue',
+                                    label: 'Commission',
                                     data: commissions,
                                     backgroundColor: 'rgba(94, 114, 228, 0.3)',
                                     borderColor: '#5e72e4',
@@ -170,6 +188,35 @@
                 </script>
             @endforeach
 
+
+            {{-- BAR CHART --}}
+            <script>
+                if ($('#barChart').length) {
+                    var ctx = document.getElementById("barChart").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: {!! $BarChartMonths !!},
+                            datasets: [{
+                                label: 'Revenue',
+                                data: {!! $BarChartTotal !!},
+                                backgroundColor: "#ff2fa0"
+                            }, {
+                                label: 'Commission',
+                                data: {!! $BarChartCommissions !!},
+                                backgroundColor: "#5e72e4"
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    barPercentage: .7
+                                }]
+                            }
+                        }
+                    });
+                }
+            </script>
         </x-slot>
     </x-slot>
 </x-layout>

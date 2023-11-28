@@ -45,6 +45,22 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-xl-12 col-lg-12 col-12 pl-5">
+                                <h3>Revenue & Commission</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    {{-- error --}}
+                                    <div class="box">
+                                        <div class="box-body">
+                                            <!-- chart -->
+                                            <canvas id="barChart" height="110"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </section>
@@ -71,6 +87,35 @@
                                 borderColor: '#5e72e4',
                                 borderWidth: 3
                             }]
+                        }
+                    });
+                }
+
+
+
+                // BAR CHART
+                if ($('#barChart').length) {
+                    var ctx = document.getElementById("barChart").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: {!! $months !!},
+                            datasets: [{
+                                label: 'Revenue',
+                                data: {!! $totalAmount !!},
+                                backgroundColor: "#ff2fa0"
+                            }, {
+                                label: 'Commission',
+                                data: {!! $commissions !!},
+                                backgroundColor: "#5e72e4"
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    barPercentage: .7
+                                }]
+                            }
                         }
                     });
                 }

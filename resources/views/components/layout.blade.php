@@ -50,7 +50,7 @@
     {{-- <script src="{{ asset('assets/custom/js/pages/calendar-dash.js') }}"></script> --}}
     <script src="{{ asset('assets/chart/chart.js') }}"></script>
     <script src="{{ asset('assets/Chart.js/Chart.min.js') }}"></script>
-    <script src="{{ asset('assets/Chart.js/chartjs-script.js') }}"></script>
+    {{-- <script src="{{ asset('assets/Chart.js/chartjs-script.js') }}"></script> --}}
 
     {{-- <script>
         let isProduction = {{ env('APP_ENV', true) == 'production' ? true : false }};
