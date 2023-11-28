@@ -48,6 +48,9 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($transactions as $transaction)
+                                                    @php
+                                                        $isPaid = in_array(date('m', strtotime($transaction->month_year)), $payments)
+                                                    @endphp
                                                         <tr class="text-center">
                                                             <td>{{ $transaction->month }}</td>
                                                             <td><i class="fa fa-rupee"></i>
@@ -56,7 +59,7 @@
                                                                 {{ $transaction->commission }}</td>
                                                             {{-- <td><span class="label label-success">Paid</span></td> --}}
                                                             <td>
-                                                                @if (in_array(date('m', strtotime($transaction->month_year)), $payments))
+                                                                @if ($isPaid)
                                                                     <span class="label label-success">Paid</span>
                                                                 @else
                                                                     <button doctor_id="{{ $doctor->id }}"
@@ -69,6 +72,11 @@
 
                                                         </tr>
                                                     @endforeach
+                                                    <tr class="text-center">
+                                                        <th>Total</th>
+                                                        <th><i class="fa fa-rupee"></i> {{ array_sum(json_decode($totalAmount)) }}</th>
+                                                        <th><i class="fa fa-rupee"></i> {{ array_sum(json_decode($commissions)) }}</th>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
