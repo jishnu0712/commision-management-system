@@ -1,6 +1,9 @@
 <x-layout>
     <x-slot name="title">Departments</x-slot>
     <x-slot name="content">
+        @php
+            $userPermission = json_decode(auth()->user()->permissions);
+        @endphp
         <div class="content-wrapper">
             <div class="container-full">
                 <!-- Main content -->
@@ -46,7 +49,9 @@
                                                     <th>Department</th>
                                                     <th>Description</th>
                                                     <th>Date Time</th>
-                                                    <th>Action</th>
+                                                    @if (in_array('department_edit', $userPermission))
+                                                        <th>Action</th>
+                                                    @endif
                                                 </tr>
                                             </thead>
                                             <tbody id="sortable_art">
@@ -64,13 +69,13 @@
                                                         <td data-title="Date Time">
                                                             {{ CustomHelper::dateFormat('d/m/Y h:i a', $department->created_at) }}
                                                         </td>
-                                                        <td data-title="Action">
-                                                            <a href="{{ route('department.edit', ['department_id' => encrypt($department->id)]) }}"
-                                                                class="btn btn-primary"><i class='fa fa-edit'></i></a>
-                                                            {{-- <button data-rowId="{{ $department->id }}"
-                                                                class="btn btn-danger removeRow"><i
-                                                                    class='fa fa-trash'></i></button> --}}
-                                                        </td>
+                                                        @if (in_array('department_edit', $userPermission))
+                                                            <td data-title="Action">
+                                                                <a href="{{ route('department.edit', ['department_id' => encrypt($department->id)]) }}"
+                                                                    class="btn btn-primary"><i
+                                                                        class='fa fa-edit'></i></a>
+                                                            </td>
+                                                        @endif
                                                     </tr>
                                                 @endforeach
 
@@ -84,7 +89,8 @@
                                                 aria-live="polite">
                                                 {{-- @if ($departments->lastPage() > 1) --}}
                                                 <p class="text-center text-muted float-left">
-                                                    Showing {{ $departments->firstItem() }} to {{ $departments->lastItem() }} of
+                                                    Showing {{ $departments->firstItem() }} to
+                                                    {{ $departments->lastItem() }} of
                                                     {{ $departments->total() }} entries
                                                 </p>
                                                 {{-- @endif --}}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -12,7 +13,7 @@ class CreateUserController extends Controller
 {
     public function index(Request $request)
     {
-        $query = User::where('type', 'user');
+        $query = User::where('type', 'user')->where('id', '<>', auth()->user()->id);
 
         if ($request->has('name') && !empty($request->name)) {
             $query->where('name', 'like', '%' . $request->name . '%');
@@ -139,7 +140,9 @@ class CreateUserController extends Controller
         if ($request->hasFile('image')) {
             $user->profile_pic = $customFilename . '.' . $fileExtension;
         }
-
+        if($request->has('password') && !empty($request->password)){
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
 
         return redirect()->route('user.edit', $request->user_id)->with('success', 'User updated successfully');

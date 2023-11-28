@@ -1,6 +1,9 @@
 <x-layout>
     <x-slot name="title">Users</x-slot>
     <x-slot name="content">
+        @php
+            $userPermission = json_decode(auth()->user()->permissions);
+        @endphp
         <div class="content-wrapper">
             <div class="container-full">
                 <!-- Main content -->
@@ -64,7 +67,9 @@
                                                     <th>Mobile</th>
                                                     <th>Email</th>
                                                     <th>Date Time</th>
-                                                    <th>Action</th>
+                                                    @if (in_array('users_edit', $userPermission))
+                                                        <th>Action</th>
+                                                    @endif
                                                 </tr>
                                             </thead>
                                             <tbody id="sortable_art">
@@ -88,13 +93,16 @@
                                                         <td data-title="Date Time">
                                                             {{ CustomHelper::dateFormat('d/m/Y h:i a', $user->created_at) }}
                                                         </td>
-                                                        <td data-title="Action">
-                                                            <a href="{{ route('user.edit', ['user_id' => encrypt($user->id)]) }}"
-                                                                class="btn btn-primary"><i class='fa fa-edit'></i></a>
-                                                            {{-- <button data-rowId="{{ $user->id }}"
+                                                        @if (in_array('users_edit', $userPermission))
+                                                            <td data-title="Action">
+                                                                <a href="{{ route('user.edit', ['user_id' => encrypt($user->id)]) }}"
+                                                                    class="btn btn-primary"><i
+                                                                        class='fa fa-edit'></i></a>
+                                                                {{-- <button data-rowId="{{ $user->id }}"
                                                                 class="btn btn-danger removeRow"><i
                                                                     class='fa fa-trash'></i></button> --}}
-                                                        </td>
+                                                            </td>
+                                                        @endif
                                                     </tr>
                                                 @endforeach
 
