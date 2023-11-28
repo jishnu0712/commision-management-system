@@ -139,10 +139,10 @@
             </div>
         </div>
         <x-slot name="javascript">
-            @foreach ($doctors as $key => $doctor)
-                <script>
-                    if ($("#AreaChart{{ $doctor->id }}").length) {
-                        var ctx = document.getElementById("AreaChart{{ $doctor->id }}").getContext('2d');
+            <script>
+                const getMultiChart = (doctor_id, months, commissions) => {
+                    if ($(`#AreaChart${doctor_id}`).length) {
+                        var ctx = document.getElementById(`AreaChart${doctor_id}`).getContext('2d');
 
                         var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
                         gradientStroke1.addColorStop(0, '#4facfe');
@@ -151,10 +151,10 @@
                         var myChart = new Chart(ctx, {
                             type: 'line',
                             data: {
-                                labels: {!! $monthsArr[$doctor->id] !!},
+                                labels: months,
                                 datasets: [{
                                     label: 'Revenue',
-                                    data: {!! $commissionsArr[$doctor->id] !!},
+                                    data: commissions,
                                     backgroundColor: 'rgba(94, 114, 228, 0.3)',
                                     borderColor: '#5e72e4',
                                     borderWidth: 3
@@ -162,7 +162,11 @@
                             }
                         });
                     }
-                    
+                }
+            </script>
+            @foreach ($doctors as $doctor)
+                <script>
+                    getMultiChart('{{ $doctor->id }}', JSON.parse('{!! $monthsArr[$doctor->id] !!}'), JSON.parse('{!! $commissionsArr[$doctor->id] !!}'));
                 </script>
             @endforeach
 

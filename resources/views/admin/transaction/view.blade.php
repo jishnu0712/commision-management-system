@@ -1,5 +1,5 @@
 <x-layout>
-    <x-slot name="title">Dashboard</x-slot>
+    <x-slot name="title">Transaction of {{ $doctor->name }}</x-slot>
     <x-slot name="content">
         <div class="content-wrapper">
             <div class="container-full">
