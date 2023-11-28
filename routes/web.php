@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/store', [CreateUserController::class, 'store'])->name('user.store');
     Route::post('/user/update', [CreateUserController::class, 'update'])->name('user.update');
     Route::get('/user/edit/{user_id}', [CreateUserController::class, 'edit'])->name('user.edit');
+    Route::post('/user/update/permission', [CreateUserController::class, 'permission'])->name('user.permission');
 
     // DEPARTMENTS ROUTES 
     Route::get('/department', [DepartmentController::class, 'index'])->name('department.index');

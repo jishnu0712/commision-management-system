@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -24,7 +25,6 @@ class CreateUserController extends Controller
         }
 
         $users = $query->paginate(10);
-
         return view('admin.user.index', compact('users'));
     }
 
@@ -87,10 +87,14 @@ class CreateUserController extends Controller
             return back()->with('error', 'Invalid User ID!');
         }
         $user = User::find($user_id);
-        return view('admin.user.edit', compact('user'));
+
+        $userPermissions = json_decode($user->permissions, true);
+
+        return view('admin.user.edit', compact('user', 'userPermissions'));
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         // validate data
         $rules = [
             'name' => 'required|string',
@@ -98,7 +102,7 @@ class CreateUserController extends Controller
             'email' => 'required|string|email',
         ];
 
-        if(!empty($request->password)){
+        if (!empty($request->password)) {
             $rules['password'] = 'required|string|min:8';
         }
 
@@ -132,13 +136,33 @@ class CreateUserController extends Controller
         $user->name = $request->name;
         $user->mobile = $request->mobile;
         $user->email = $request->email;
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $user->profile_pic = $customFilename . '.' . $fileExtension;
         }
 
         $user->save();
 
         return redirect()->route('user.edit', $request->user_id)->with('success', 'User updated successfully');
+    }
+
+
+    public function permission(Request $request)
+    {
+        try {
+            $user_id = decrypt($request->user_id);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return back()->with('error', 'Invalid User ID!');
+        }
+
+        $permission = $request->except(['_token', 'user_id']);
+        $permission = array_keys($permission);
+        $permission = json_encode($permission);
+
+        $user = User::find($user_id);
+        $user->permissions = $permission;
+        $user->save();
+     
+        return redirect()->route('user.edit', $request->user_id)->with('success', 'User permissions updated successfully');
 
     }
 }
