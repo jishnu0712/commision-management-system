@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             'mobile' => '7407602125',
             'type' => 'admin',
             'password' => bcrypt('admin'),
+            'permissions' => '["dashboard_view","users_view","users_add","users_edit","department_view","department_add","department_edit","doctor_view","doctor_add","doctor_edit","tranaction_view","tranaction_add"]'
         ]);
     }
 }

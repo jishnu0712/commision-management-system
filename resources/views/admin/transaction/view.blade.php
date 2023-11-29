@@ -48,9 +48,9 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($transactions as $transaction)
-                                                    @php
-                                                        $isPaid = in_array(date('m', strtotime($transaction->month_year)), $payments)
-                                                    @endphp
+                                                        @php
+                                                            $isPaid = in_array(date('m', strtotime($transaction->month_year)), $payments);
+                                                        @endphp
                                                         <tr class="text-center">
                                                             <td>{{ $transaction->month }}</td>
                                                             <td><i class="fa fa-rupee"></i>
@@ -74,8 +74,10 @@
                                                     @endforeach
                                                     <tr class="text-center">
                                                         <th>Total</th>
-                                                        <th><i class="fa fa-rupee"></i> {{ array_sum(json_decode($totalAmount)) }}</th>
-                                                        <th><i class="fa fa-rupee"></i> {{ array_sum(json_decode($commissions)) }}</th>
+                                                        <th><i class="fa fa-rupee"></i>
+                                                            {{ array_sum(json_decode($totalAmount)) }}</th>
+                                                        <th><i class="fa fa-rupee"></i>
+                                                            {{ array_sum(json_decode($commissions)) }}</th>
                                                     </tr>
                                                 </tbody>
                                             </table>

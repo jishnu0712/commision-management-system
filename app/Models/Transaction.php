@@ -18,6 +18,6 @@ class Transaction extends Model
 
     public function department()
     {
-        return $this->belongsTo(Department::class, 'bill_id');
+        return $this->belongsTo(Department::class, 'dept_id');
     }
 }

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->text('permissions')->after('password')->default('[]');
+        Schema::table('bills', function (Blueprint $table) {
+            $table->string('patient_name')->after('doctor_id')->nullable();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('permissions');
+        Schema::table('bills', function (Blueprint $table) {
+            $table->dropColumn('patient_name');
         });
     }
 };

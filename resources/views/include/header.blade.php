@@ -80,7 +80,7 @@
                 </div>
                 <div class="info">
                     <a class="px-20" href="#">
-                        {{ auth()->user()->firstname }} {{ auth()->user()->lastname }}
+                        {{ auth()->user()->name }}
                     </a>
                 </div>
             </div>
@@ -174,13 +174,29 @@
                 </li>
             @endif
 
-            @if (in_array('tranaction_view', $userPermission))
-               <li>
-                  <a href="{{ route('transaction.create') }}">
-                     <i class="icon-Layout-4-blocks"><span class="path1"></span><span class="path2"></span></i>
-                     <span>Transaction</span>
-                  </a>
-               </li>
+            @if (in_array('tranaction_view', $userPermission) || in_array('tranaction_add', $userPermission))
+                <li class="treeview">
+                    <a href="#">
+                        <i class="icon-Thunder-move"><span class="path1"></span><span class="path2"></span></i>
+                        <span>Doctors</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-right pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @if (in_array('tranaction_view', $userPermission))
+                            <li><a href="{{ route('transaction.invoice') }}"><i class="icon-Commit"><span
+                                            class="path1"></span><span class="path2"></span></i>All Transaction</a>
+                            </li>
+                        @endif
+
+                        @if (in_array('tranaction_add', $userPermission))
+                            <li><a href="{{ route('transaction.create') }}"><i class="icon-Commit"><span
+                                            class="path1"></span><span class="path2"></span></i>Add Transaction</a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
             @endif
 
         </ul>

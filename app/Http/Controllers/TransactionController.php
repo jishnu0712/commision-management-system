@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CustomHelper\CustomHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Bill;
 use App\Models\Department;
@@ -33,6 +34,7 @@ class TransactionController extends Controller
     {
         $bill = new Bill();
         $bill->bill_no = $request->bill_no;
+        $bill->patient_name = $request->patient_name;
         $bill->bill_date = $request->bill_date;
         $bill->doctor_id = $request->doctor_id;
         if ($bill->save()) {
@@ -106,4 +108,26 @@ class TransactionController extends Controller
 
         return view('admin.transaction.view', compact('payments', 'transactions', 'doctor', 'commissions', 'months', 'totalAmount'));
     }
+
+    public function invoice(Request $request)
+    {
+        if ($request->has('month') && !empty($request->month)) {
+            $month = CustomHelper::dateFormat('m', $request->month);
+            $year = CustomHelper::dateFormat('Y', $request->month);
+        } else {
+            $month = date('m');
+            $year = date('Y');
+        }
+    
+        $invoices = Doctor::with(['bill' => function ($query) use ($month, $year) {
+            $query->with('transaction.department')
+                ->whereMonth('bill_date', $month)
+                ->whereYear('bill_date', $year);
+        }])->get();
+
+        $newMonth = CustomHelper::dateFormat('F', $year.'-'.$month);
+    
+        return view('admin.transaction.invoices', compact('invoices', 'newMonth', 'year', 'month'));
+    }
+    
 }

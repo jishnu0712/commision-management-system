@@ -96,11 +96,14 @@
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <h3>Update percentage (Department wise)</h3>
+                                                    <input type="number" class="form-control" id="defaultValue" placeholder="Default Value">
                                                 </div>
+                                                
                                                 {{-- <div class="col-md-4">
                                                     <span style="float: right;"><a class="btn btn-primary btn-sm" href="{{ route('doctor.sync', ['doctor_id' => encrypt($doctor->id)]) }}">Sync Department</a></span>
                                                 </div> --}}
                                             </div>
+                                            <hr/>
                                             <div class="row">
                                                 @foreach($percentages as $percentage)
                                                 {{-- {{ $percentage }} --}}
@@ -127,5 +130,17 @@
         <!-- /.content -->
         </div>
         </div>
+    </x-slot>
+    <x-slot name="javascript">
+        <script>
+            $(document).ready(function(){
+                $("#defaultValue").on("keyup", function(e){
+                    e.preventDefault();
+                    let $this = $(this);
+                    let defaultValue = $this.val();
+                    $(document).find('input[value="0.00"]').val(defaultValue);
+                })
+            })
+        </script>
     </x-slot>
 </x-layout>
