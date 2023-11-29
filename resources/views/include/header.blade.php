@@ -106,7 +106,7 @@
             @if (in_array('users_view', $userPermission) || in_array('users_add', $userPermission))
                 <li class="treeview">
                     <a href="#">
-                        <i class="icon-Thunder-move"><span class="path1"></span><span class="path2"></span></i>
+                        <i class="fa fa-users"><span class="path1"></span><span class="path2"></span></i>
                         <span>Users</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-right pull-right"></i>
@@ -154,7 +154,7 @@
             @if (in_array('doctor_view', $userPermission) || in_array('doctor_add', $userPermission))
                 <li class="treeview">
                     <a href="#">
-                        <i class="icon-Thunder-move"><span class="path1"></span><span class="path2"></span></i>
+                        <i class="fa fa-plus"><span class="path1"></span><span class="path2"></span></i>
                         <span>Doctors</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-right pull-right"></i>
@@ -177,8 +177,8 @@
             @if (in_array('tranaction_view', $userPermission) || in_array('tranaction_add', $userPermission))
                 <li class="treeview">
                     <a href="#">
-                        <i class="icon-Thunder-move"><span class="path1"></span><span class="path2"></span></i>
-                        <span>Doctors</span>
+                        <i class="fa fa-rupee"><span class="path1"></span><span class="path2"></span></i>
+                        <span>Transaction</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-right pull-right"></i>
                         </span>
