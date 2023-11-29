@@ -67,11 +67,11 @@
                                         @endforeach
 
                                         @foreach ($invoices as $invoice)
-                                        @php
-                                            if(count($invoice->bill) < 1){
-                                                continue;
-                                            }
-                                        @endphp
+                                            @php
+                                                if (count($invoice->bill) < 1) {
+                                                    continue;
+                                                }
+                                            @endphp
                                             <table class="table table-stripped">
                                                 <thead>
                                                     <tr class="text-center">
@@ -83,23 +83,22 @@
                                                         <th>Patient Name</th>
                                                         <th>Date</th>
                                                         <th>Department</th>
-                                                        <th>Amount</th>
+                                                        <th>Commission</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @php
                                                         $commissionSum = 0;
                                                     @endphp
+                                                    {{-- Display Doctor Name only once per invoice --}}
+                                                    <tr class="text-center">
+                                                        <td rowspan="{{ $totalTransactionCount }}">{{ $invoice->name }}
+                                                        </td>
+                                                    </tr>
+
                                                     @foreach ($invoice->bill as $index => $bill)
-                                                        @php
-                                                            $transactionCount = count($bill->transaction);
-                                                        @endphp
                                                         @foreach ($bill->transaction as $tranIndex => $tran)
                                                             <tr class="text-center">
-                                                                @if ($index === 0 && $tranIndex === 0)
-                                                                    <td rowspan="{{ $totalTransactionCount }}">
-                                                                        {{ $invoice->name }}</td>
-                                                                @endif
                                                                 <td>{{ $bill->patient_name }}</td>
                                                                 <td>{{ CustomHelper::dateFormat('F-Y', $bill->bill_date) }}
                                                                 </td>
@@ -113,16 +112,36 @@
                                                     @endforeach
                                                     <tr class="text-center">
                                                         <th colspan="2"></th>
-                                                        <th>Grand Total</th>
+                                                        <th>GRAND TOTAL</th>
                                                         <th>₹ {{ $commissionSum }}</th>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                             <br><br>
                                         @endforeach
-
-
+                                        <!-- pagination -->
+                                        <div class="row mt-20">
+                                            <div class="col-sm-12 col-md-5 d-flex flex-column-reverse">
+                                                <div class="dataTables_info" id="example5_info" role="status"
+                                                    aria-live="polite">
+                                                    {{-- @if ($invoices->lastPage() > 1) --}}
+                                                    <p class="text-center text-muted float-left">
+                                                        Showing {{ $invoices->firstItem() }} to
+                                                        {{ $invoices->lastItem() }} of
+                                                        {{ $invoices->total() }} entries
+                                                    </p>
+                                                    {{-- @endif --}}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-7">
+                                                <div class="dataTables_paginate paging_simple_numbers">
+                                                    {{ $invoices->appends(request()->query())->links('pagination::bootstrap-4') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- ./pagination./ -->
                                     </div>
+
                                 </div>
                             </div>
                         </div>

@@ -103,7 +103,7 @@ class TransactionController extends Controller
 
 
         // CHECK IS PAYMENT
-        $payments = DoctorPayment::where('doctor_id', $doctor_id)->where('year',$currentYear);
+        $payments = DoctorPayment::where('doctor_id', $doctor_id)->where('year', $currentYear);
         $payments = $payments->pluck('month')->all();
 
         return view('admin.transaction.view', compact('payments', 'transactions', 'doctor', 'commissions', 'months', 'totalAmount'));
@@ -118,16 +118,16 @@ class TransactionController extends Controller
             $month = date('m');
             $year = date('Y');
         }
-    
+
         $invoices = Doctor::with(['bill' => function ($query) use ($month, $year) {
             $query->with('transaction.department')
                 ->whereMonth('bill_date', $month)
                 ->whereYear('bill_date', $year);
-        }])->get();
+        }])
+            ->paginate(10);
 
-        $newMonth = CustomHelper::dateFormat('F', $year.'-'.$month);
-    
+        $newMonth = CustomHelper::dateFormat('F', $year . '-' . $month);
+
         return view('admin.transaction.invoices', compact('invoices', 'newMonth', 'year', 'month'));
     }
-    
 }
