@@ -103,7 +103,7 @@
                                                                 <td>{{ CustomHelper::dateFormat('F-Y', $bill->bill_date) }}
                                                                 </td>
                                                                 <td>{{ $tran->department->dept_name }}</td>
-                                                                <td>₹ {{ $tran->commission }}</td>
+                                                                <td>Rs. {{ $tran->commission }}</td>
                                                             </tr>
                                                             @php
                                                                 $commissionSum += $tran->commission;
@@ -113,7 +113,7 @@
                                                     <tr class="text-center">
                                                         <th colspan="2"></th>
                                                         <th>GRAND TOTAL</th>
-                                                        <th>₹ {{ $commissionSum }}</th>
+                                                        <th>Rs. {{ $commissionSum }}</th>
                                                     </tr>
                                                 </tbody>
                                             </table>

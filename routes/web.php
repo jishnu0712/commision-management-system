@@ -70,6 +70,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/transaction/store', [TransactionController::class, 'store'])->name('transaction.store');
     Route::get('/transaction/department', [TransactionController::class, 'department'])->name('transaction.department');
     Route::get('/transaction/view/{doctor_id}', [TransactionController::class, 'view'])->name('transaction.view');
+    Route::get('/transaction/download', [TransactionController::class, 'download'])->name('transaction.download');
 
     // PASSWORD ROUTE
     Route::get('/password', [PasswordController::class, 'index'])->name('password.index');

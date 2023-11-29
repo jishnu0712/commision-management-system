@@ -12,6 +12,7 @@ use App\Models\Percentage;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class TransactionController extends Controller
 {
@@ -129,5 +130,37 @@ class TransactionController extends Controller
         $newMonth = CustomHelper::dateFormat('F', $year . '-' . $month);
 
         return view('admin.transaction.invoices', compact('invoices', 'newMonth', 'year', 'month'));
+    }
+
+    public function download(Request $request)
+    {
+        // Get all transaction details using doctor_id
+        if ($request->has('month') && !empty($request->month)) {
+            $month = CustomHelper::dateFormat('m', $request->month);
+            $year = CustomHelper::dateFormat('Y', $request->month);
+        } else {
+            $month = date('m');
+            $year = date('Y');
+        }
+
+        $invoices = Doctor::with(['bill' => function ($query) use ($month, $year) {
+            $query->with('transaction.department')
+                ->whereMonth('bill_date', $month)
+                ->whereYear('bill_date', $year);
+        }])
+            ->get();
+        $newMonth = CustomHelper::dateFormat('F', $year . '-' . $month);
+
+        // return a download file
+        $data = [
+            'invoices' => $invoices,
+            'newMonth' => $newMonth,
+            'year' => $year,
+            'month' => $month
+        ];
+
+        $pdf = PDF::loadView('pdf.template', $data);
+
+        return $pdf->download('All_inovoices.pdf');
     }
 }
