@@ -17,8 +17,11 @@ class DoctorController extends Controller
     {
         $query = Doctor::query();
 
-        if ($request->has('name') && !empty($request->name)) {
-            $query->where('name', 'like', '%' . $request->name . '%');
+        if ($request->has('doctor_name') && !empty($request->doctor_name)) {
+            $query->where('name', 'like', '%' . $request->doctor_name . '%');
+        }
+        if ($request->has('hospital_name') && !empty($request->hospital_name)) {
+            $query->where('hospital_name', 'like', '%' . $request->hospital_name . '%');
         }
         if ($request->has('email') && !empty($request->email)) {
             $query->where('email', $request->email);
@@ -117,7 +120,7 @@ class DoctorController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
-        
+
         return view('admin.doctor.edit', compact('doctor', 'percentages'));
     }
 
@@ -198,7 +201,8 @@ class DoctorController extends Controller
         }
     }
 
-    public function payment(Request $request){
+    public function payment(Request $request)
+    {
         $payment = new DoctorPayment();
         $payment->doctor_id = $request->doctor_id;
         $payment->year = date('Y', strtotime($request->month_year));
