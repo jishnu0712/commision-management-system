@@ -58,7 +58,7 @@
                             <div class="box">
                                 <div class="box-body">
                                     <div class="table-responsive-ipad overflow-auto">
-                                        <table class="table table-striped table-hover">
+                                        <table id="users-table" class="table table-striped table-hover">
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th>ID</th>
@@ -109,26 +109,6 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <!-- pagination -->
-                                    <div class="row mt-20">
-                                        <div class="col-sm-12 col-md-5 d-flex flex-column-reverse">
-                                            <div class="dataTables_info" id="example5_info" role="status"
-                                                aria-live="polite">
-                                                {{-- @if ($users->lastPage() > 1) --}}
-                                                <p class="text-center text-muted float-left">
-                                                    Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of
-                                                    {{ $users->total() }} entries
-                                                </p>
-                                                {{-- @endif --}}
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-7">
-                                            <div class="dataTables_paginate paging_simple_numbers">
-                                                {{ $users->appends(request()->query())->links('pagination::bootstrap-4') }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- ./pagination./ -->
                                 </div>
                             </div>
                         </div>
@@ -141,6 +121,25 @@
     <x-slot name="javascript">
         <script>
             $(document).ready(function() {
+                softnicRms.itemListPage.init();
+            });
+        </script>
+    </x-slot>
+
+    <x-slot name="javascript">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                // Initialize DataTable
+                $('#users-table').DataTable({
+                    "pageLength": 10,  // Number of entries to show per page
+                    "searching": true,  // Enable searching
+                    // Add more options as needed
+                });
+
                 softnicRms.itemListPage.init();
             });
         </script>
