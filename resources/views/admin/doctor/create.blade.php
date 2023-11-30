@@ -87,7 +87,7 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 control-label">Address </label>
                                                 <div class="col-sm-9">
-                                                    <textarea rows="5" class="form-control" name="address" placeholder="address">{{ old('address') }}</textarea>
+                                                    <textarea rows="5" class="form-control" required name="address" placeholder="address">{{ old('address') }}</textarea>
                                                     <span class="error">@error('address') {{ $message }} @enderror</span>
                                                 </div>
                                             </div>
