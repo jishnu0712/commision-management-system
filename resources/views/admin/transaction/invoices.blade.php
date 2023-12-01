@@ -44,9 +44,10 @@
                                             <input type="month" id="month" class="form-control" value="{{ date($year . '-' . $month) }}">
                                         </div>
                                         <div class="col-md-8">
-                                            <a href="{{ route('transaction.download') }}" class="btn btn-primary printButton float-right">
+                                            <a href="{{ route('transaction.download', ['month' => request('month')]) }}" class="btn btn-primary printButton float-right">
                                                 <i class="fa fa-print"></i> Print
                                             </a>
+                                            
                                         </div>
                                     </div>
                                 </div>

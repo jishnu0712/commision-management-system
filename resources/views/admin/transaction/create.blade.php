@@ -19,7 +19,7 @@
                                             @csrf
 
                                             <div class="row col-md-12">
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label class="control-label">Select Doctor<span
                                                                 class="input_required">*</span></label>
@@ -29,14 +29,14 @@
                                                             @foreach ($doctors as $doctor)
                                                                 <option value="{{ $doctor->id }}">{{ $doctor->name }}
                                                                     -
-                                                                    ({{ $doctor->hospital_name }})
+                                                                    ({{ $doctor->address }})
                                                                 </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Patient Name</label>
                                                         <input type="text" name="patient_name" class="form-control"
@@ -44,7 +44,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Bill No</label>
                                                         <input type="text" name="bill_no" class="form-control"
@@ -52,7 +52,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Bill Date</label>
                                                         <input type="date" name="bill_date" class="form-control"
