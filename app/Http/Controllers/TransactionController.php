@@ -120,12 +120,14 @@ class TransactionController extends Controller
             $year = date('Y');
         }
 
-        $invoices = Doctor::with(['bill' => function ($query) use ($month, $year) {
-            $query->with('transaction.department')
-                ->whereMonth('bill_date', $month)
-                ->whereYear('bill_date', $year);
-        }])
-            ->paginate(10);
+        $invoices = Doctor::has('bill')
+            ->with(['bill' => function ($query) use ($month, $year) {
+                $query->with('transaction.department')
+                    ->whereMonth('bill_date', $month)
+                    ->whereYear('bill_date', $year);
+            }])
+            ->get();
+
 
         $newMonth = CustomHelper::dateFormat('F', $year . '-' . $month);
 
@@ -143,11 +145,12 @@ class TransactionController extends Controller
             $year = date('Y');
         }
 
-        $invoices = Doctor::with(['bill' => function ($query) use ($month, $year) {
-            $query->with('transaction.department')
-                ->whereMonth('bill_date', $month)
-                ->whereYear('bill_date', $year);
-        }])
+        $invoices = Doctor::has('bill')
+            ->with(['bill' => function ($query) use ($month, $year) {
+                $query->with('transaction.department')
+                    ->whereMonth('bill_date', $month)
+                    ->whereYear('bill_date', $year);
+            }])
             ->get();
         $newMonth = CustomHelper::dateFormat('F', $year . '-' . $month);
 

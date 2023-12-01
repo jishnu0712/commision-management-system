@@ -58,7 +58,12 @@
                                             @endphp
                                             {{-- Display Doctor Name only once per invoice --}}
                                             <tr class="text-center">
-                                                <td rowspan="{{ $totalTransactionCount }}">{{ $invoice->name }}
+                                                <td rowspan="{{ $totalTransactionCount }}">
+                                                    {{ $invoice->name }} 
+                                                    <br>
+                                                    {{ $invoice->address }}
+                                                    <br>
+                                                    {{ $invoice->mobile }}
                                                 </td>
                                             </tr>
 

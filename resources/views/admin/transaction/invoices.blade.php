@@ -123,24 +123,7 @@
                                             <br><br>
                                             @endforeach
                                             <!-- pagination -->
-                                            <div class="row mt-20">
-                                                <div class="col-sm-12 col-md-5 d-flex flex-column-reverse">
-                                                    <div class="dataTables_info" id="example5_info" role="status" aria-live="polite">
-                                                        {{-- @if ($invoices->lastPage() > 1) --}}
-                                                        <p class="text-center text-muted float-left">
-                                                            Showing {{ $invoices->firstItem() }} to
-                                                            {{ $invoices->lastItem() }} of
-                                                            {{ $invoices->total() }} entries
-                                                        </p>
-                                                        {{-- @endif --}}
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-md-7">
-                                                    <div class="dataTables_paginate paging_simple_numbers">
-                                                        {{ $invoices->appends(request()->query())->links('pagination::bootstrap-4') }}
-                                                    </div>
-                                                </div>
-                                            </div>
+                                           
                                             <!-- ./pagination./ -->
                                     </div>
 
