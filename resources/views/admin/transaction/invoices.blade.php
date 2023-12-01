@@ -44,9 +44,9 @@
                                             <input type="month" id="month" class="form-control" value="{{ date($year . '-' . $month) }}">
                                         </div>
                                         <div class="col-md-8">
-                                            <button class="btn btn-primary printButton float-right" onclick="window.print()">
+                                            <a href="{{ route('transaction.download') }}" class="btn btn-primary printButton float-right">
                                                 <i class="fa fa-print"></i> Print
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
