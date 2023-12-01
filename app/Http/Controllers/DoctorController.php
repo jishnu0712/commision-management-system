@@ -30,7 +30,7 @@ class DoctorController extends Controller
             $query->where('mobile', $request->mobile);
         }
 
-        $doctors = $query->paginate(10);
+        $doctors = $query->get();
 
         return view('admin.doctor.index', compact('doctors'));
     }

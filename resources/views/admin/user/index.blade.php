@@ -73,12 +73,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="sortable_art">
-                                                @foreach ($users as $user)
+                                                @foreach ($users as $key => $user)
                                                     <tr>
                                                         <td data-title="Sl No">
                                                             <a href="javascript:;">
                                                                 <button type="button"
-                                                                    class="waves-effect waves-light btn btn-primary">{{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}</button>
+                                                                    class="waves-effect waves-light btn btn-primary">{{ $key + 1 }}</button>
                                                             </a>
                                                         </td>
                                                         <td data-title="img">

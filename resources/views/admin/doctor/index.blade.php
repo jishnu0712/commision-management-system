@@ -62,11 +62,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="sortable_art">
-                                                @foreach ($doctors as $doctor)
+                                                @foreach ($doctors as $key => $doctor)
                                                 <tr>
                                                     <td data-title="Sl No">
                                                         <a href="javascript:;">
-                                                            <button type="button" class="waves-effect waves-light btn btn-primary">{{ ($doctors->currentPage() - 1) * $doctors->perPage() + $loop->iteration }}</button>
+                                                            <button type="button" class="waves-effect waves-light btn btn-primary">{{ $key + 1 }}</button>
                                                         </a>
                                                     </td>
                                                     <td data-title="img">
@@ -130,7 +130,7 @@
             $(document).ready(function() {
                 // Initialize DataTable
                 $('#doctors-table').DataTable({
-                    "pageLength": 10,  // Number of entries to show per page
+                    "pageLength": 50,  // Number of entries to show per page
                     "searching": true,  // Enable searching
                     // Add more options as needed
                 });
