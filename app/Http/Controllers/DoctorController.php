@@ -17,8 +17,11 @@ class DoctorController extends Controller
     {
         $query = Doctor::query();
 
-        if ($request->has('name') && !empty($request->name)) {
-            $query->where('name', 'like', '%' . $request->name . '%');
+        if ($request->has('doctor_name') && !empty($request->doctor_name)) {
+            $query->where('name', 'like', '%' . $request->doctor_name . '%');
+        }
+        if ($request->has('hospital_name') && !empty($request->hospital_name)) {
+            $query->where('hospital_name', 'like', '%' . $request->hospital_name . '%');
         }
         if ($request->has('email') && !empty($request->email)) {
             $query->where('email', $request->email);
@@ -27,7 +30,7 @@ class DoctorController extends Controller
             $query->where('mobile', $request->mobile);
         }
 
-        $doctors = $query->paginate(10);
+        $doctors = $query->get();
 
         return view('admin.doctor.index', compact('doctors'));
     }
@@ -44,11 +47,7 @@ class DoctorController extends Controller
         $rules = [
             'name' => 'required|string',
             'address' => 'string',
-            'gender' => 'required|string',
-            'hospital_name' => 'required|string',
-            'specialization' => 'required|string',
             'mobile' => 'required|string|unique:doctors|max:10|min:10',
-            'email' => 'required|string|unique:doctors|email',
         ];
 
         // CHECK IF AN IMAGE FILE IS UPLOADED
@@ -117,7 +116,7 @@ class DoctorController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
-        
+
         return view('admin.doctor.edit', compact('doctor', 'percentages'));
     }
 
@@ -127,11 +126,7 @@ class DoctorController extends Controller
         $rules = [
             'name' => 'required|string',
             'address' => 'string',
-            'gender' => 'required|string',
-            'hospital_name' => 'required|string',
-            'specialization' => 'required|string',
             'mobile' => 'required|string|max:10|min:10',
-            'email' => 'required|string|email',
         ];
 
         // CHECK IF AN IMAGE FILE IS UPLOADED
@@ -198,7 +193,8 @@ class DoctorController extends Controller
         }
     }
 
-    public function payment(Request $request){
+    public function payment(Request $request)
+    {
         $payment = new DoctorPayment();
         $payment->doctor_id = $request->doctor_id;
         $payment->year = date('Y', strtotime($request->month_year));

@@ -25,7 +25,7 @@ class CreateUserController extends Controller
             $query->where('mobile', $request->mobile);
         }
 
-        $users = $query->paginate(10);
+        $users = $query->get();
         return view('admin.user.index', compact('users'));
     }
 

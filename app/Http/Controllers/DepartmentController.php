@@ -16,7 +16,7 @@ class DepartmentController extends Controller
         if ($request->has('dept_name') && !empty($request->dept_name)) {
             $query->where('dept_name', 'like', '%' . $request->dept_name . '%');
         }
-        $departments = $query->paginate(10);
+        $departments = $query->get();
         return view('admin.department.index', compact('departments'));
     }
     public function create()

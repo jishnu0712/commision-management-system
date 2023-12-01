@@ -36,27 +36,27 @@
                                             </div>
 
                                             <div class="form-group row">
-                                                <label class="col-sm-3 control-label">Email<span class="input_required">*</span></label>
+                                                <label class="col-sm-3 control-label">Email<span class="input_required"></span></label>
                                                 <div class="col-sm-9">
-                                                    <input value="{{ old('email') }}" type="text" name="email" class="form-control @error('email') is-invalid @enderror" required placeholder="Doctor Email">
+                                                    <input value="{{ old('email') }}" type="text" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Doctor Email">
 
                                                     <span class="error">@error('email') {{ $message }} @enderror</span>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
-                                                <label class="col-sm-3 control-label">Specialization<span class="input_required">*</span></label>
+                                                <label class="col-sm-3 control-label">Specialization<span class="input_required"></span></label>
                                                 <div class="col-sm-9">
-                                                    <input value="{{ old('specialization') }}" type="text" name="specialization" class="form-control @error('specialization') is-invalid @enderror" required placeholder="Doctor Specialization">
+                                                    <input value="{{ old('specialization') }}" type="text" name="specialization" class="form-control @error('specialization') is-invalid @enderror" placeholder="Doctor Specialization">
 
                                                     <span class="error">@error('specialization') {{ $message }} @enderror</span>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
-                                                <label class="col-sm-3 control-label">Gender<span class="input_required">*</span></label>
+                                                <label class="col-sm-3 control-label">Gender<span class="input_required"></span></label>
                                                 <div class="col-sm-9">
-                                                    <select name="gender" class="form-control @error('gender') is-invalid @enderror" required>
+                                                    <select name="gender" class="form-control @error('gender') is-invalid @enderror">
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
                                                     </select>
@@ -66,9 +66,9 @@
                                             </div>
 
                                             <div class="form-group row">
-                                                <label class="col-sm-3 control-label">Hospital Name<span class="input_required">*</span></label>
+                                                <label class="col-sm-3 control-label">Hospital Name<span class="input_required"></span></label>
                                                 <div class="col-sm-9">
-                                                    <input value="{{ old('hospital_name') }}" type="text" name="hospital_name" class="form-control @error('hospital_name') is-invalid @enderror" required placeholder="Hospital Name">
+                                                    <input value="{{ old('hospital_name') }}" type="text" name="hospital_name" class="form-control @error('hospital_name') is-invalid @enderror" placeholder="Hospital Name">
 
                                                     <span class="error">@error('hospital_name') {{ $message }} @enderror</span>
                                                 </div>
@@ -85,9 +85,9 @@
 
 
                                             <div class="form-group row">
-                                                <label class="col-sm-3 control-label">Address </label>
+                                                <label class="col-sm-3 control-label">Address <span class="input_required">*</span></label>
                                                 <div class="col-sm-9">
-                                                    <textarea rows="5" class="form-control" name="address" placeholder="address">{{ old('address') }}</textarea>
+                                                    <textarea requireds rows="5" class="form-control" required name="address" placeholder="address">{{ old('address') }}</textarea>
                                                     <span class="error">@error('address') {{ $message }} @enderror</span>
                                                 </div>
                                             </div>
