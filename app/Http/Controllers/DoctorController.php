@@ -126,11 +126,7 @@ class DoctorController extends Controller
         $rules = [
             'name' => 'required|string',
             'address' => 'string',
-            'gender' => 'required|string',
-            'hospital_name' => 'required|string',
-            'specialization' => 'required|string',
             'mobile' => 'required|string|max:10|min:10',
-            'email' => 'required|string|email',
         ];
 
         // CHECK IF AN IMAGE FILE IS UPLOADED
