@@ -140,7 +140,7 @@ class CreateUserController extends Controller
         if ($request->hasFile('image')) {
             $user->profile_pic = $customFilename . '.' . $fileExtension;
         }
-        if($request->has('password') && !empty($request->password)){
+        if ($request->has('password') && !empty($request->password)) {
             $user->password = Hash::make($request->password);
         }
         $user->save();
@@ -164,8 +164,21 @@ class CreateUserController extends Controller
         $user = User::find($user_id);
         $user->permissions = $permission;
         $user->save();
-     
-        return redirect()->route('user.edit', $request->user_id)->with('success', 'User permissions updated successfully');
 
+        return redirect()->route('user.edit', $request->user_id)->with('success', 'User permissions updated successfully');
+    }
+
+    public function delete(Request $request)
+    {
+        try {
+            $user_id = decrypt($request->user_id);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return response()->json(['status' => 'error', 'msg' => 'Invalid user ID!']);
+        }
+
+        $user = User::find($user_id);
+        $user->delete();
+
+        return response()->json(['status' => 'success', 'msg' => 'User deleted successfully']);
     }
 }

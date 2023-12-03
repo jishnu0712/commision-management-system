@@ -60,8 +60,7 @@
                                                         <td data-title="Sl No">
                                                             <a href="javascript:;">
                                                                 <button type="button"
-                                                                    class="waves-effect waves-light btn btn-primary">{{ $key 
-                                                                    + 1 }}</button>
+                                                                    class="waves-effect waves-light btn btn-primary">{{ $key + 1 }}</button>
                                                             </a>
                                                         </td>
                                                         <td data-title="name">{{ $department->dept_name }}</td>
@@ -75,6 +74,9 @@
                                                                 <a href="{{ route('department.edit', ['department_id' => encrypt($department->id)]) }}"
                                                                     class="btn btn-primary"><i
                                                                         class='fa fa-edit'></i></a>
+                                                                <button data-rowId="{{ encrypt($department->id) }}"
+                                                                    class="btn btn-danger removeRow"><i
+                                                                        class='fa fa-trash'></i></button>
                                                             </td>
                                                         @endif
                                                     </tr>
@@ -109,12 +111,12 @@
             $(document).ready(function() {
                 // Initialize DataTable
                 $('#departments-table').DataTable({
-                    "pageLength": 50,  // Number of entries to show per page
-                    "searching": true,  // Enable searching
+                    "pageLength": 50, // Number of entries to show per page
+                    "searching": true, // Enable searching
                     // Add more options as needed
                 });
 
-                softnicRms.itemListPage.init();
+                softnicRms.deptListPage.init();
             });
         </script>
     </x-slot>

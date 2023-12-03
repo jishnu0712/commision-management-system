@@ -202,4 +202,16 @@ class DoctorController extends Controller
         $payment->save();
         return response()->json(['status' => 'success', 'msg' => 'Payment completed successfully.']);
     }
+
+    public function delete(Request $request)
+    {
+        try {
+            $doctor = decrypt($request->doctor);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return response()->json(['status' => 'error', 'msg' => 'Invalid Doctor!']);
+        }
+        $user = Doctor::find($doctor);
+        $user->delete();
+        return response()->json(['status' => 'success', 'msg' => 'Doctor deleted successfully']);
+    }
 }

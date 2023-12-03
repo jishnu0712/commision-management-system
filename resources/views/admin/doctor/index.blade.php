@@ -94,8 +94,8 @@
                                                     @if (in_array('doctor_edit', $userPermission))
                                                     <td data-title="Action">
                                                         <a href="{{ route('doctor.edit', ['doctor_id' => encrypt($doctor->id)]) }}" class="btn btn-primary"><i class='fa fa-edit'></i></a>
-                                                        {{-- <button data-rowId="{{ $doctor->id }}"
-                                                        class="btn btn-danger removeRow"><i class='fa fa-trash'></i></button> --}}
+                                                        <button data-rowId="{{ encrypt($doctor->id) }}"
+                                                        class="btn btn-danger removeRow"><i class='fa fa-trash'></i></button>
                                                     </td>
                                                     @endif
                                                 </tr>
@@ -135,7 +135,7 @@
                     // Add more options as needed
                 });
 
-                softnicRms.itemListPage.init();
+                softnicRms.doctorListPage.init();
             });
         </script>
     </x-slot>
