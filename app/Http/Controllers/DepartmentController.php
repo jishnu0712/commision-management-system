@@ -87,4 +87,16 @@ class DepartmentController extends Controller
 
         return redirect()->route('department.edit', $request->department_id)->with('success', 'Department updated successfully');
     }
+
+    public function delete(Request $request)
+    {
+        try {
+            $dept_id = decrypt($request->dept_id);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return response()->json(['status' => 'error', 'msg' => 'Invalid Department!']);
+        }
+        $user = Department::find($dept_id);
+        $user->delete();
+        return response()->json(['status' => 'success', 'msg' => 'Department deleted successfully']);
+    }
 }

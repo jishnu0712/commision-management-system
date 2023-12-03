@@ -98,9 +98,9 @@
                                                                 <a href="{{ route('user.edit', ['user_id' => encrypt($user->id)]) }}"
                                                                     class="btn btn-primary"><i
                                                                         class='fa fa-edit'></i></a>
-                                                                {{-- <button data-rowId="{{ $user->id }}"
+                                                                <button data-rowId="{{ encrypt($user->id) }}"
                                                                 class="btn btn-danger removeRow"><i
-                                                                    class='fa fa-trash'></i></button> --}}
+                                                                    class='fa fa-trash'></i></button>
                                                             </td>
                                                         @endif
                                                     </tr>

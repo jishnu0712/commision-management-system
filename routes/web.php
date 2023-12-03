@@ -47,12 +47,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/update', [CreateUserController::class, 'update'])->name('user.update');
     Route::get('/user/edit/{user_id}', [CreateUserController::class, 'edit'])->name('user.edit');
     Route::post('/user/update/permission', [CreateUserController::class, 'permission'])->name('user.permission');
+    Route::post('/user/delete', [CreateUserController::class, 'delete'])->name('user.delete');
 
     // DEPARTMENTS ROUTES 
     Route::get('/department', [DepartmentController::class, 'index'])->name('department.index');
     Route::get('/department/create', [DepartmentController::class, 'create'])->name('department.create');
     Route::post('/department/store', [DepartmentController::class, 'store'])->name('department.store');
     Route::post('/department/update', [DepartmentController::class, 'update'])->name('department.update');
+    Route::post('/department/delete', [DepartmentController::class, 'delete'])->name('department.delete');
     Route::get('/department/edit/{department_id}', [DepartmentController::class, 'edit'])->name('department.edit');
 
     // DOCTOR ROUTES 
@@ -60,6 +62,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/doctor/create', [DoctorController::class, 'create'])->name('doctor.create');
     Route::post('/doctor/store', [DoctorController::class, 'store'])->name('doctor.store');
     Route::post('/doctor/update', [DoctorController::class, 'update'])->name('doctor.update');
+    Route::post('/doctor/delete', [DoctorController::class, 'delete'])->name('doctor.delete');
     Route::get('/doctor/edit/{doctor_id}', [DoctorController::class, 'edit'])->name('doctor.edit');
     Route::post('/doctor/payment', [DoctorController::class, 'payment'])->name('doctor.payment');
 

@@ -4,11 +4,11 @@
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		},
 		statusCode: {
-			401: function() {
-			  window.location.reload();
-			  return false;
+			401: function () {
+				window.location.reload();
+				return false;
 			}
-		  }
+		}
 	});
 
 	function updateModal(orderId) {
@@ -238,41 +238,13 @@
 		},
 		itemListPage: {
 			init: function () {
-				$(document).on('change', '.item_status', function (e) {
-					e.preventDefault();
-					var $this = $(this);
-					var setStatus = this.checked ? 1 : 0;
-					var url = `menu/statusupdate/${$this.attr('data-rowId')}`;
-
-					$.ajax({
-						url: url,
-						type: 'PUT', // Use PUT method
-						data: {
-							status: setStatus,
-						},
-						success: function (data) {
-							if (data.status === 'success') {
-								swal('Success', data.msg, 'success');
-							} else {
-								swal('Error', data.msg, 'error');
-							}
-						},
-						error: function () {
-							swal('Error', 'An error occurred.', 'error');
-						},
-					});
-				});
-
-
 				/*remove item*/
 				var $removeRow = $('.removeRow');
 				$removeRow.on('click', function (e) {
 					e.preventDefault();
 					var $this = $(this);
 					var postData = {
-						removeItem: "",
-
-						rowId: $this.attr('data-rowId')
+						user_id: $this.attr('data-rowId')
 					}
 
 					swal({
@@ -284,8 +256,82 @@
 						confirmButtonText: "Yes, delete it!",
 						closeOnConfirm: true
 					}, function () {
-						$.post('action/action.user.php', postData, function (res) {
-							var data = JSON.parse(res);
+						$.post('/user/delete', postData, function (res) {
+							var data = res;
+							if (data.status == 'success') {
+								$this.parent().parent().css('background-color', 'red').hide('slow');
+								swal("Success", data.msg, "success");
+							} else {
+								swal("Error", data.msg, "error");
+							}
+
+						});
+					});
+
+				});
+				/* ./ remove item ./ */
+
+			}
+		},
+		deptListPage: {
+			init: function () {
+				/*remove item*/
+				var $removeRow = $('.removeRow');
+				$removeRow.on('click', function (e) {
+					e.preventDefault();
+					var $this = $(this);
+					var postData = {
+						dept_id: $this.attr('data-rowId')
+					}
+
+					swal({
+						title: "Are you sure?",
+						text: "You will not be able to recover.",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonColor: "#DD6B55",
+						confirmButtonText: "Yes, delete it!",
+						closeOnConfirm: true
+					}, function () {
+						$.post('/department/delete', postData, function (res) {
+							var data = res;
+							if (data.status == 'success') {
+								$this.parent().parent().css('background-color', 'red').hide('slow');
+								swal("Success", data.msg, "success");
+							} else {
+								swal("Error", data.msg, "error");
+							}
+
+						});
+					});
+
+				});
+				/* ./ remove item ./ */
+
+			}
+		},
+		doctorListPage: {
+			init: function () {
+				/*remove item*/
+				var $removeRow = $('.removeRow');
+				$removeRow.on('click', function (e) {
+					e.preventDefault();
+					var $this = $(this);
+					var postData = {
+						doctor: $this.attr('data-rowId')
+					}
+
+					swal({
+						title: "Are you sure?",
+						text: "You will not be able to recover.",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonColor: "#DD6B55",
+						confirmButtonText: "Yes, delete it!",
+						closeOnConfirm: true
+					}, function () {
+						$.post('/doctor/delete', postData, function (res) {
+							var data = res;
 							if (data.status == 'success') {
 								$this.parent().parent().css('background-color', 'red').hide('slow');
 								swal("Success", data.msg, "success");
@@ -545,7 +591,7 @@
 					e.preventDefault();
 					var $this = $(this);
 					var pay_type = $("#pay_type :selected").val();
-					if(pay_type == ''){
+					if (pay_type == '') {
 						swal("Error", 'Please select payment type!', "error");
 						return false;
 					}
@@ -853,41 +899,41 @@
 
 				/* ./create new order ./ */
 
-                // SEND WHATSAPP INVOICE
-                $(document).on("click", ".sendWhatsappInvoice", function(e) {
-                    e.preventDefault();
-                    let order_id = $('input[name="order_id"]').val();
-                    showLoader('Sending invoice on WhatsApp...');
-                    $.get(`wpinvoice/${order_id}`, (data, status) => {
-                        hideLoader();
-                        if (!data.error) {
-                            swal('Success', 'Invoice sent successfully.', 'success');
-                        } else {
-                            swal('Error', data.message, 'error');
-                        }
-                    })
-                });
+				// SEND WHATSAPP INVOICE
+				$(document).on("click", ".sendWhatsappInvoice", function (e) {
+					e.preventDefault();
+					let order_id = $('input[name="order_id"]').val();
+					showLoader('Sending invoice on WhatsApp...');
+					$.get(`wpinvoice/${order_id}`, (data, status) => {
+						hideLoader();
+						if (!data.error) {
+							swal('Success', 'Invoice sent successfully.', 'success');
+						} else {
+							swal('Error', data.message, 'error');
+						}
+					})
+				});
 
-                // SEND ORDER INFO
-                $(document).on("click", "#sendOrderInfoBtn", function(e) {
-                    e.preventDefault();
-                    let order_id = $('input[name="order_id"]').val();
-                    let waiter_id = $('#waiter_id option:selected').val();
-                    if(waiter_id == ''){
-                        swal('Error', 'Please select a waiter!', 'error');
-                        return false;
-                    }
+				// SEND ORDER INFO
+				$(document).on("click", "#sendOrderInfoBtn", function (e) {
+					e.preventDefault();
+					let order_id = $('input[name="order_id"]').val();
+					let waiter_id = $('#waiter_id option:selected').val();
+					if (waiter_id == '') {
+						swal('Error', 'Please select a waiter!', 'error');
+						return false;
+					}
 
-                    showLoader('Sending order info...');
-                    $.post(`waiter/send`, {order_id : order_id, waiter_id : waiter_id}, (data, status) => {
-                        hideLoader();
-                        if (!data.error) {
-                            swal('Success', 'KOT sent successfully.', 'success');
-                        } else {
-                            swal('Error', data.message, 'error');
-                        }
-                    })
-                });
+					showLoader('Sending order info...');
+					$.post(`waiter/send`, { order_id: order_id, waiter_id: waiter_id }, (data, status) => {
+						hideLoader();
+						if (!data.error) {
+							swal('Success', 'KOT sent successfully.', 'success');
+						} else {
+							swal('Error', data.message, 'error');
+						}
+					})
+				});
 
 			}
 		},
