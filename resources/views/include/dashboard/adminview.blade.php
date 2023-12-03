@@ -6,17 +6,17 @@
         </div>
         <div class="row">
 
-            <x-admin-dashboard-order-card title="Total" :count="$orders->total_orders"
-                icon="fa fa-truck text-success" link="" />
+            <x-admin-dashboard-order-card title="Total" :count="$orders->total_orders" icon="fa fa-truck text-success"
+                link="" />
 
-            <x-admin-dashboard-order-card title="This Year" :count="$orders->completed_orders ? $orders->completed_orders : 0"
-                icon="fa fa-check-circle text-warning" link="" />
+            <x-admin-dashboard-order-card title="This Year" :count="$orders->completed_orders ? $orders->completed_orders : 0" icon="fa fa-check-circle text-warning"
+                link="" />
 
-            <x-admin-dashboard-order-card title="This Month" :count="$orders->cancelled_orders ? $orders->cancelled_orders : 0"
-                icon="fa fa-window-close text-danger" link="" />
+            <x-admin-dashboard-order-card title="This Month" :count="$orders->cancelled_orders ? $orders->cancelled_orders : 0" icon="fa fa-window-close text-danger"
+                link="" />
 
-            <x-admin-dashboard-order-card title="This Week" :count="$orders->placed_orders ? $orders->placed_orders : 0"
-                icon="fa fa-clock-o text-primary" link="" />
+            <x-admin-dashboard-order-card title="This Week" :count="$orders->placed_orders ? $orders->placed_orders : 0" icon="fa fa-clock-o text-primary"
+                link="" />
 
         </div>
         <!-- ./ ORDER INFORMATION ./ -->
@@ -69,15 +69,15 @@
                                     @foreach ($doctors as $key => $doctor)
                                         <tr>
                                             <td data-title="Sl No">
-                                                <a
-                                                    href="{{ route('transaction.view', ['doctor_id' => encrypt($doctor->id)]) }}">
-                                                    <button type="button"
-                                                        class="waves-effect waves-light btn btn-primary">{{ ($doctors->currentPage() - 1) * $doctors->perPage() + $loop->iteration }}</button>
-                                                </a>
+
+                                                <button type="button"
+                                                    class="waves-effect waves-light btn btn-primary">{{ ($doctors->currentPage() - 1) * $doctors->perPage() + $loop->iteration }}</button>
+
                                             </td>
                                             <td data-title="img">
                                                 <img width="80" alt="Profile pic"
-                                                    src="{{ asset('storage/doctors/profile_pic/' . $doctor->profile_pic) }}">
+                                                    src="{{ asset('storage/doctors/profile_pic/' . (!empty($doctor->profile_pic) ? $doctor->profile_pic : 'profile_pic.png')) }}">
+
                                             </td>
                                             <td data-title="name">{{ $doctor->name }}</td>
 
@@ -85,8 +85,13 @@
                                                 {{ $doctor->hospital_name }}
                                             </td>
                                             <td data-title="chart">
-                                                <canvas id="AreaChart{{ $doctor->id }}"
-                                                    height="110"></canvas>
+                                                <a
+                                                    href="{{ route('transaction.view', ['doctor_id' => encrypt($doctor->id)]) }}">
+                                                    <div>
+                                                        <canvas id="AreaChart{{ $doctor->id }}"
+                                                            height="110"></canvas>
+                                                    </div>
+                                                </a>
                                             </td>
 
                                             {{-- <td data-title="Action">
@@ -101,17 +106,15 @@
                             </table>
                         </div>
                         <!-- pagination -->
-                        <div class="row mt-20">
+                        {{-- <div class="row mt-20">
                             <div class="col-sm-12 col-md-5 d-flex flex-column-reverse">
                                 <div class="dataTables_info" id="example5_info" role="status"
                                     aria-live="polite">
-                                    {{-- @if ($doctors->lastPage() > 1) --}}
                                     <p class="text-center text-muted float-left">
                                         Showing {{ $doctors->firstItem() }} to
                                         {{ $doctors->lastItem() }} of
                                         {{ $doctors->total() }} entries
                                     </p>
-                                    {{-- @endif --}}
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-7">
@@ -119,7 +122,7 @@
                                     {{ $doctors->appends(request()->query())->links('pagination::bootstrap-4') }}
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- ./pagination./ -->
                     </div>
                 </div>

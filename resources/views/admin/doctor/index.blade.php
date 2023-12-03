@@ -70,7 +70,8 @@
                                                         </a>
                                                     </td>
                                                     <td data-title="img">
-                                                        <img width="80" alt="Profile pic" src="{{ asset('storage/doctors/profile_pic/' . $doctor->profile_pic) }}">
+                                                        <img width="80" alt="Profile pic" src="{{ asset('storage/doctors/profile_pic/' . (!empty($doctor->profile_pic) ? $doctor->profile_pic : 'profile_pic.png')) }}">
+
                                                     </td>
                                                     <td data-title="name">{{ $doctor->name }}</td>
                                                     <td data-title="description">
