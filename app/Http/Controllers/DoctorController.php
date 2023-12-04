@@ -47,7 +47,6 @@ class DoctorController extends Controller
         $rules = [
             'name' => 'required|string',
             'address' => 'string',
-            'mobile' => 'required|string|unique:doctors|max:10|min:10',
         ];
 
         // CHECK IF AN IMAGE FILE IS UPLOADED
@@ -126,7 +125,6 @@ class DoctorController extends Controller
         $rules = [
             'name' => 'required|string',
             'address' => 'string',
-            'mobile' => 'required|string|max:10|min:10',
         ];
 
         // CHECK IF AN IMAGE FILE IS UPLOADED

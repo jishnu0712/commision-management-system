@@ -29,7 +29,6 @@ class DepartmentController extends Controller
         // validate data
         $rules = [
             'dept_name' => 'required|string',
-            'description' => 'required|string',
             'percentage' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);

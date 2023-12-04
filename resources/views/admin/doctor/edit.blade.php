@@ -27,9 +27,9 @@
                                             </div>
 
                                             <div class="form-group row">
-                                                <label class="col-sm-3 control-label">Mobile<span class="input_required">*</span></label>
+                                                <label class="col-sm-3 control-label">Mobile<span class="input_required"></span></label>
                                                 <div class="col-sm-9">
-                                                    <input value="{{ $doctor->mobile }}" type="text" name="mobile" class="form-control @error('mobile') is-invalid @enderror" required placeholder="Doctor Mobile">
+                                                    <input value="{{ $doctor->mobile }}" type="text" name="mobile" class="form-control @error('mobile') is-invalid @enderror" placeholder="Doctor Mobile">
 
                                                     <span class="error">@error('mobile') {{ $message }} @enderror</span>
                                                 </div>
@@ -109,7 +109,7 @@
                                                 {{-- {{ $percentage }} --}}
                                                     <div class="col-md-3">
                                                         <label class="control-label">{{ $percentage->department->dept_name }} (%)</label>
-                                                        <input type="text" name="percentage[{{ $percentage->id }}]" class="form-control" placeholder="{{ $percentage->department->dept_name }} percentage" value="{{ $percentage->percentage }}">
+                                                        <input type="text" name="percentage[{{ $percentage->id }}]" class="form-control" placeholder="{{ $percentage->department->dept_name }} percentage" value="{{ ($percentage->percentage != 0) ? $percentage->percentage : $percentage->department->percentage }}">
                                                     </div>
                                                 @endforeach
                                             </div>
