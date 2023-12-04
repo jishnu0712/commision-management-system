@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bill;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
@@ -60,8 +61,14 @@ class DashboardController extends Controller
         $BarChartMonths = $revenueCommission->pluck('month')->all();
         $BarChartMonths = json_encode($BarChartMonths);
 
+        // GET TOTAL REVENUE, COMMISSIONS
+        $totals = Transaction::select(
+            DB::raw('SUM(amount) as total_amount'),
+            DB::raw('SUM(commission) as total_commission')
+        )->first();
+
         // GET CURRENT YEAR REVENUE AND COMMISSION
-        return view('dashboard', compact('orders', 'doctors', 'monthsArr', 'commissionsArr', 'BarChartCommissions', 'BarChartTotal', 'BarChartMonths'));
+        return view('dashboard', compact('orders', 'doctors', 'monthsArr', 'commissionsArr', 'BarChartCommissions', 'BarChartTotal', 'BarChartMonths', 'totals'));
     }
 
     public function getRevenueCommission($currentYear, $doctor_id = false)

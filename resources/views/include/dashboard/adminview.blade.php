@@ -6,13 +6,13 @@
         </div>
         <div class="row">
 
-            <x-admin-dashboard-order-card title="Total" :count="$orders->total_orders" icon="fa fa-truck text-success" link="" />
+            <x-admin-dashboard-order-card title="Total Revenue" :count="$totals->total_amount" icon="" link="" />
 
-            <x-admin-dashboard-order-card title="This Year" :count="$orders->completed_orders ? $orders->completed_orders : 0" icon="fa fa-check-circle text-warning" link="" />
+            <x-admin-dashboard-order-card title="Total Commissions" :count="$totals->total_commission ? $totals->total_commission : 0" icon="" link="" />
+<!-- 
+            <x-admin-dashboard-order-card title="This Month" :count="$orders->cancelled_orders ? $orders->cancelled_orders : 0" icon="" link="" />
 
-            <x-admin-dashboard-order-card title="This Month" :count="$orders->cancelled_orders ? $orders->cancelled_orders : 0" icon="fa fa-window-close text-danger" link="" />
-
-            <x-admin-dashboard-order-card title="This Week" :count="$orders->placed_orders ? $orders->placed_orders : 0" icon="fa fa-clock-o text-primary" link="" />
+            <x-admin-dashboard-order-card title="This Week" :count="$orders->placed_orders ? $orders->placed_orders : 0" icon="" link="" /> -->
 
         </div>
         <!-- ./ ORDER INFORMATION ./ -->

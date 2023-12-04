@@ -140,7 +140,7 @@ class TransactionController extends Controller
 
         $invoices = Doctor::has('bill')
             ->with(['bill' => function ($query) use ($month, $year) {
-                $query->with('transaction.department')
+                $query->has('transaction.department')
                     ->whereMonth('bill_date', $month)
                     ->whereYear('bill_date', $year);
             }])
