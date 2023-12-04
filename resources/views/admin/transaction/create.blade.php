@@ -26,7 +26,7 @@
                                                             @foreach ($doctors as $doctor)
                                                             <option value="{{ $doctor->id }}">{{ $doctor->name }}
                                                                 -
-                                                                ({{ $doctor->address }})
+                                                                ({{ $doctor->address }}) - ({{ $doctor->mobile }})
                                                             </option>
                                                             @endforeach
                                                         </select>
@@ -50,7 +50,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Bill Date</label>
-                                                        <input type="date" name="bill_date" class="form-control" required placeholder="Bill Date">
+                                                        <input type="date" name="bill_date" class="form-control" required placeholder="Bill Date" value="{{ date('Y-m-d') }}">
                                                     </div>
                                                 </div>
 
