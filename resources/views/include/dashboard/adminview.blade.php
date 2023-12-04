@@ -6,17 +6,13 @@
         </div>
         <div class="row">
 
-            <x-admin-dashboard-order-card title="Total" :count="$orders->total_orders" icon="fa fa-truck text-success"
-                link="" />
+            <x-admin-dashboard-order-card title="Total" :count="$orders->total_orders" icon="fa fa-truck text-success" link="" />
 
-            <x-admin-dashboard-order-card title="This Year" :count="$orders->completed_orders ? $orders->completed_orders : 0" icon="fa fa-check-circle text-warning"
-                link="" />
+            <x-admin-dashboard-order-card title="This Year" :count="$orders->completed_orders ? $orders->completed_orders : 0" icon="fa fa-check-circle text-warning" link="" />
 
-            <x-admin-dashboard-order-card title="This Month" :count="$orders->cancelled_orders ? $orders->cancelled_orders : 0" icon="fa fa-window-close text-danger"
-                link="" />
+            <x-admin-dashboard-order-card title="This Month" :count="$orders->cancelled_orders ? $orders->cancelled_orders : 0" icon="fa fa-window-close text-danger" link="" />
 
-            <x-admin-dashboard-order-card title="This Week" :count="$orders->placed_orders ? $orders->placed_orders : 0" icon="fa fa-clock-o text-primary"
-                link="" />
+            <x-admin-dashboard-order-card title="This Week" :count="$orders->placed_orders ? $orders->placed_orders : 0" icon="fa fa-clock-o text-primary" link="" />
 
         </div>
         <!-- ./ ORDER INFORMATION ./ -->
@@ -67,39 +63,35 @@
                                 </thead>
                                 <tbody id="sortable_art">
                                     @foreach ($doctors as $key => $doctor)
-                                        <tr>
-                                            <td data-title="Sl No">
+                                    <tr>
+                                        <td data-title="Sl No">
+                                            <button type="button" class="waves-effect waves-light btn btn-primary">
+                                                {{ ($doctors->currentPage() - 1) * $doctors->perPage() + $loop->iteration }}
 
-                                                <button type="button"
-                                                    class="waves-effect waves-light btn btn-primary">{{ ($doctors->currentPage() - 1) * $doctors->perPage() + $loop->iteration }}</button>
+                                            </button>
+                                        </td>
+                                        <td data-title="img">
+                                            <img width="80" alt="Profile pic" class="avatar avatar-lg bg-primary-light rounded100" src="{{ asset('storage/doctors/profile_pic/' . (!empty($doctor->profile_pic) ? $doctor->profile_pic : 'profile_pic.png')) }}">
 
-                                            </td>
-                                            <td data-title="img">
-                                                <img width="80" alt="Profile pic"
-                                                    src="{{ asset('storage/doctors/profile_pic/' . (!empty($doctor->profile_pic) ? $doctor->profile_pic : 'profile_pic.png')) }}">
+                                        </td>
+                                        <td data-title="name">{{ $doctor->name }}</td>
 
-                                            </td>
-                                            <td data-title="name">{{ $doctor->name }}</td>
+                                        <td data-title="hospital_name">
+                                            {{ $doctor->hospital_name }}
+                                        </td>
+                                        <td data-title="chart">
+                                            <a href="{{ route('transaction.view', ['doctor_id' => encrypt($doctor->id)]) }}">
+                                                <div>
+                                                    <canvas id="AreaChart{{ $doctor->id }}" height="110"></canvas>
+                                                </div>
+                                            </a>
+                                        </td>
 
-                                            <td data-title="hospital_name">
-                                                {{ $doctor->hospital_name }}
-                                            </td>
-                                            <td data-title="chart">
-                                                <a
-                                                    href="{{ route('transaction.view', ['doctor_id' => encrypt($doctor->id)]) }}">
-                                                    <div>
-                                                        <canvas id="AreaChart{{ $doctor->id }}"
-                                                            height="110"></canvas>
-                                                    </div>
-                                                </a>
-                                            </td>
-
-                                            {{-- <td data-title="Action">
+                                        {{-- <td data-title="Action">
                                                 <a href="{{ route('doctor.edit', ['doctor_id' => encrypt($doctor->id)]) }}"
-                                                    class="btn btn-primary"><i
-                                                        class='fa fa-edit'></i></a>
-                                            </td> --}}
-                                        </tr>
+                                        class="btn btn-primary"><i class='fa fa-edit'></i></a>
+                                        </td> --}}
+                                    </tr>
                                     @endforeach
 
                                 </tbody>
@@ -112,39 +104,39 @@
                                     aria-live="polite">
                                     <p class="text-center text-muted float-left">
                                         Showing {{ $doctors->firstItem() }} to
-                                        {{ $doctors->lastItem() }} of
-                                        {{ $doctors->total() }} entries
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-7">
-                                <div class="dataTables_paginate paging_simple_numbers">
-                                    {{ $doctors->appends(request()->query())->links('pagination::bootstrap-4') }}
-                                </div>
-                            </div>
-                        </div> --}}
-                        <!-- ./pagination./ -->
+                        {{ $doctors->lastItem() }} of
+                        {{ $doctors->total() }} entries
+                        </p>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- ./ INVOICE INFORMATION ./ -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box">
-                    <div class="box-body py-0">
-                        <div class="col-xl-12 col-lg-12 col-12 pl-5">
-                            <h3>Revenue & Commission of - {{ date('Y') }}</h3>
-                        </div>
-                        <hr />
-                        <div class="d-flex justify-content-between align-items-center p-20">
-                            <canvas id="barChart" height="110"></canvas>
-                        </div>
+                <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers">
+                        {{ $doctors->appends(request()->query())->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
-
-            </div>
+            </div> --}}
+            <!-- ./pagination./ -->
         </div>
     </div>
+</div>
+</div>
+
+<!-- ./ INVOICE INFORMATION ./ -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-body py-0">
+                <div class="col-xl-12 col-lg-12 col-12 pl-5">
+                    <h3>Revenue & Commission of - {{ date('Y') }}</h3>
+                </div>
+                <hr />
+                <div class="d-flex justify-content-between align-items-center p-20">
+                    <canvas id="barChart" height="110"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
 </div>

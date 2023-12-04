@@ -13,7 +13,12 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $orders = (object) ['placed_orders' => 100, 'cancelled_orders' => 200, 'completed_orders' => 300, 'total_orders' => 600];
-        $query = Doctor::query();
+        $query = Doctor::query()
+            ->leftJoin('bills', 'bills.doctor_id', '=', 'doctors.id')
+            ->leftJoin('transactions', 'transactions.bill_id', '=', 'bills.id')
+            ->select('doctors.id', 'doctors.name', 'doctors.mobile', 'doctors.email', 'doctors.address', 'doctors.gender', 'doctors.specialization', 'profile_pic', 'doctors.hospital_name', 'doctors.created_at', 'doctors.updated_at', DB::raw('SUM(transactions.amount) as total_amount'))
+            ->groupBy('doctors.id', 'doctors.name', 'doctors.mobile', 'doctors.email', 'doctors.address', 'doctors.gender', 'doctors.specialization', 'profile_pic', 'doctors.hospital_name', 'doctors.created_at', 'doctors.updated_at') // Group by all selected columns
+            ->orderBy('total_amount', 'desc');
 
         if ($request->has('name') && !empty($request->name)) {
             $query->where('name', 'like', '%' . $request->name . '%');
