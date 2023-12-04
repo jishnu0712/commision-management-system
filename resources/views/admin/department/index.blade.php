@@ -2,7 +2,7 @@
     <x-slot name="title">Departments</x-slot>
     <x-slot name="content">
         @php
-            $userPermission = json_decode(auth()->user()->permissions);
+        $userPermission = json_decode(auth()->user()->permissions);
         @endphp
         <div class="content-wrapper">
             <div class="container-full">
@@ -11,9 +11,7 @@
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-12" style="margin-bottom:15px;">
                             <h3 style="float:left;">Departments</h3>
-                            <button onClick="add_new_banner()" type="button"
-                                class="waves-effect waves-light btn btn-light search_button"
-                                style="float: right;">Search</button>
+                            <button onClick="add_new_banner()" type="button" class="waves-effect waves-light btn btn-light search_button" style="float: right;">Search</button>
                         </div>
                         <div id="add_new_banner" class="col-xl-12 col-lg-12 col-12">
                             <div class="box">
@@ -21,16 +19,13 @@
                                     <div class="row search_advnced" style="padding: 20px;">
                                         <div class="col-12 col-md-6 col-lg-4 col-xl-3">
                                             <div class="form-group">
-                                                <label>Department Name</label><input type="text" name="dept_name"
-                                                    value="{{ request('dept_name') }}" class="form-control"
-                                                    placeholder="Department Name" />
+                                                <label>Department Name</label><input type="text" name="dept_name" value="{{ request('dept_name') }}" class="form-control" placeholder="Department Name" />
 
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-4 col-xl-3">
                                             <div class="form-group">
-                                                <label>&nbsp;</label><button type="submit"
-                                                    class="btn btn-success btn-block">Search</button>
+                                                <label>&nbsp;</label><button type="submit" class="btn btn-success btn-block">Search</button>
                                             </div>
                                         </div>
                                     </div>
@@ -50,36 +45,34 @@
                                                     <th>Description</th>
                                                     <th>Date Time</th>
                                                     @if (in_array('department_edit', $userPermission))
-                                                        <th>Action</th>
+                                                    <th>Action</th>
                                                     @endif
                                                 </tr>
                                             </thead>
                                             <tbody id="sortable_art">
                                                 @foreach ($departments as $key => $department)
-                                                    <tr>
-                                                        <td data-title="Sl No">
-                                                            <a href="javascript:;">
-                                                                <button type="button"
-                                                                    class="waves-effect waves-light btn btn-primary">{{ $key + 1 }}</button>
-                                                            </a>
-                                                        </td>
-                                                        <td data-title="name">{{ $department->dept_name }}</td>
-                                                        <td data-title="description">
-                                                            {{ $department->description }}</td>
-                                                        <td data-title="Date Time">
-                                                            {{ CustomHelper::dateFormat('d/m/Y h:i a', $department->created_at) }}
-                                                        </td>
+                                                <tr>
+                                                    <td data-title="Sl No">
+                                                        <a href="javascript:;">
+                                                            <button type="button" class="waves-effect waves-light btn btn-primary">{{ $key + 1 }}</button>
+                                                        </a>
+                                                    </td>
+                                                    <td data-title="name">{{ $department->dept_name }}</td>
+                                                    <td data-title="description">
+                                                        {{ $department->description }}
+                                                    </td>
+                                                    <td data-title="Date Time">
+                                                        {{ CustomHelper::dateFormat('d/m/Y h:i a', $department->created_at) }}
+                                                    </td>
+                                                    <td data-title="Action">
                                                         @if (in_array('department_edit', $userPermission))
-                                                            <td data-title="Action">
-                                                                <a href="{{ route('department.edit', ['department_id' => encrypt($department->id)]) }}"
-                                                                    class="btn btn-primary"><i
-                                                                        class='fa fa-edit'></i></a>
-                                                                <button data-rowId="{{ encrypt($department->id) }}"
-                                                                    class="btn btn-danger removeRow"><i
-                                                                        class='fa fa-trash'></i></button>
-                                                            </td>
+                                                        <a href="{{ route('department.edit', ['department_id' => encrypt($department->id)]) }}" class="btn btn-primary"><i class='fa fa-edit'></i></a>
                                                         @endif
-                                                    </tr>
+                                                        @if (in_array('department_delete', $userPermission))
+                                                        <button data-rowId="{{ encrypt($department->id) }}" class="btn btn-danger removeRow"><i class='fa fa-trash'></i></button>
+                                                        @endif
+                                                    </td>
+                                                </tr>
                                                 @endforeach
 
                                             </tbody>

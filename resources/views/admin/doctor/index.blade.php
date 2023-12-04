@@ -92,13 +92,14 @@
                                                     <td data-title="Date Time">
                                                         {{ CustomHelper::dateFormat('d/m/Y h:i a', $doctor->created_at) }}
                                                     </td>
-                                                    @if (in_array('doctor_edit', $userPermission))
                                                     <td data-title="Action">
+                                                        @if (in_array('doctor_edit', $userPermission))
                                                         <a href="{{ route('doctor.edit', ['doctor_id' => encrypt($doctor->id)]) }}" class="btn btn-primary"><i class='fa fa-edit'></i></a>
-                                                        <button data-rowId="{{ encrypt($doctor->id) }}"
-                                                        class="btn btn-danger removeRow"><i class='fa fa-trash'></i></button>
+                                                        @endif
+                                                        @if (in_array('doctor_delete', $userPermission))
+                                                        <button data-rowId="{{ encrypt($doctor->id) }}" class="btn btn-danger removeRow"><i class='fa fa-trash'></i></button>
+                                                        @endif
                                                     </td>
-                                                    @endif
                                                 </tr>
                                                 @endforeach
 
@@ -131,8 +132,8 @@
             $(document).ready(function() {
                 // Initialize DataTable
                 $('#doctors-table').DataTable({
-                    "pageLength": 50,  // Number of entries to show per page
-                    "searching": true,  // Enable searching
+                    "pageLength": 50, // Number of entries to show per page
+                    "searching": true, // Enable searching
                     // Add more options as needed
                 });
 

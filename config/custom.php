@@ -6,21 +6,26 @@ $permissionsList = [
     'users' => [
         'view',
         'add',
-        'edit'
+        'edit',
+        'delete'
     ],
     'department' => [
         'view',
         'add',
-        'edit'
+        'edit',
+        'delete'
     ],
     'doctor' => [
         'view',
         'add',
-        'edit'
+        'edit',
+        'delete'
     ],
     'tranaction' => [
         'view',
-        'add'
+        'add',
+        'edit',
+        'delete'
     ]
 ];
 
