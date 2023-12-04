@@ -89,7 +89,7 @@
                                                                 src="{{ asset('storage/doctors/profile_pic/' . (!empty($doctor->profile_pic) ? $doctor->profile_pic : 'profile_pic.png')) }}">
 
                                                         </td>
-                                                        <td data-title="name">{{ $doctor->name }}</td>
+                                                        <td data-title="name"><a href="{{ route('transaction.view', ['doctor_id' => encrypt($doctor->id)]) }}">{{ $doctor->name }}</a></td>
                                                         <td data-title="description">
                                                             {{ $doctor->address }}
                                                         </td>

@@ -74,7 +74,7 @@
                                             <img width="80" alt="Profile pic" class="avatar avatar-lg bg-primary-light rounded100" src="{{ asset('storage/doctors/profile_pic/' . (!empty($doctor->profile_pic) ? $doctor->profile_pic : 'profile_pic.png')) }}">
 
                                         </td>
-                                        <td data-title="name">{{ $doctor->name }}</td>
+                                        <td data-title="name">{{ $doctor->name }} ({{ $doctor->address }}) - ({{ $doctor->mobile }})</td>
 
                                         <td data-title="hospital_name">
                                             {{ $doctor->hospital_name }}
@@ -98,7 +98,7 @@
                             </table>
                         </div>
                         <!-- pagination -->
-                        {{-- <div class="row mt-20">
+                        <div class="row mt-20">
                             <div class="col-sm-12 col-md-5 d-flex flex-column-reverse">
                                 <div class="dataTables_info" id="example5_info" role="status"
                                     aria-live="polite">
@@ -114,7 +114,7 @@
                         {{ $doctors->appends(request()->query())->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
-            </div> --}}
+            </div>
             <!-- ./pagination./ -->
         </div>
     </div>
