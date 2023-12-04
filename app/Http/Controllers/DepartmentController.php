@@ -30,6 +30,7 @@ class DepartmentController extends Controller
         $rules = [
             'dept_name' => 'required|string',
             'description' => 'required|string',
+            'percentage' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
 
@@ -43,6 +44,7 @@ class DepartmentController extends Controller
         Department::create([
             'dept_name' => $request->dept_name,
             'description' => $request->description,
+            'percentage' => $request->percentage,
         ]);
         // redirect after save
         return redirect()->route('department.create')->with('success', 'Department created successfully');
@@ -64,6 +66,7 @@ class DepartmentController extends Controller
         // validate data
         $rules = [
             'dept_name' => 'required|string',
+            'percentage' => 'required',
             'description' => 'required|string',
         ];
         $validator = Validator::make($request->all(), $rules);
@@ -77,13 +80,14 @@ class DepartmentController extends Controller
         try {
             $department_id = decrypt($request->department_id);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            return back()->with('error', 'Invalid User ID!');
+            return back()->with('error', 'Invalid Department ID!');
         }
 
-        $user = Department::find($department_id);
-        $user->dept_name = $request->dept_name;
-        $user->description = $request->description;
-        $user->save();
+        $dept = Department::find($department_id);
+        $dept->dept_name = $request->dept_name;
+        $dept->percentage = $request->percentage;
+        $dept->description = $request->description;
+        $dept->save();
 
         return redirect()->route('department.edit', $request->department_id)->with('success', 'Department updated successfully');
     }

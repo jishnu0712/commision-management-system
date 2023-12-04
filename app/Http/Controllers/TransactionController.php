@@ -26,13 +26,23 @@ class TransactionController extends Controller
     {
         $doctor_id = $request->doctor_id;
 
-        $percentages = Percentage::where('doctor_id', $doctor_id)->with('department')->with('department.percentage')->get();
-
-        return view('admin.department.dropdown', compact('percentages'));
+        $departments = DB::table('departments')
+            ->leftJoin('percentages', function ($join) use ($doctor_id) {
+                $join->on('departments.id', '=', 'percentages.dept_id')
+                    ->where('percentages.doctor_id', '=', $doctor_id);
+            })
+            ->select(
+                'departments.id as department_id',
+                'departments.dept_name',
+                DB::raw('CASE WHEN percentages.percentage IS NOT NULL THEN percentages.percentage ELSE departments.percentage END as percentage')
+            )
+            ->get();
+        return view('admin.department.dropdown', compact('departments'));
     }
 
     public function store(Request $request)
     {
+        $doctor_id = $request->doctor_id;
         $bill = new Bill();
         $bill->bill_no = $request->bill_no;
         $bill->patient_name = $request->patient_name;
@@ -45,10 +55,18 @@ class TransactionController extends Controller
             $transactions = [];
 
             foreach ($request->department as $index => $dept_id) {
-                $percentage = Percentage::select('percentage')
-                    ->where('dept_id', $dept_id)
-                    ->where('doctor_id', $request->doctor_id)
+                $percentage = DB::table('departments')
+                    ->leftJoin('percentages', function ($join) use ($doctor_id, $dept_id) {
+                        $join->on('departments.id', '=', 'percentages.dept_id')
+                            ->where('percentages.doctor_id', '=', $doctor_id);
+                    })
+                    ->select(
+                        'departments.id as department_id',
+                        'departments.dept_name',
+                        DB::raw('CASE WHEN percentages.percentage IS NOT NULL THEN percentages.percentage ELSE departments.percentage END as percentage')
+                    )->where('departments.id', $dept_id)
                     ->first();
+
                 $transactions[] = [
                     'dept_id' => $dept_id,
                     'bill_id' => $bill_id,

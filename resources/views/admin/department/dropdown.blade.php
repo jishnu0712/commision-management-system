@@ -1,5 +1,5 @@
 <option value="">Select Department</option>
-@foreach ($percentages as $percentage)
-    <option value="{{ $percentage->department->id }}">{{ $percentage->department->dept_name }} -
-        {{ intval($percentage->percentage) }}%</option>
+@foreach ($departments as $department)
+    <option value="{{ $department->department_id }}">{{ $department->dept_name }} -
+        {{ intval($department->percentage) }}%</option>
 @endforeach

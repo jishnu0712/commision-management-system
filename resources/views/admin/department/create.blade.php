@@ -24,6 +24,17 @@
                                                     <span class="error">@error('dept_name') {{ $message }} @enderror</span>
                                                 </div>
                                             </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 control-label">Default Percentage %<span class="input_required">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="percentage" class="form-control @error('percentage') is-invalid @enderror" required placeholder="Department Name" value="0.00">
+
+                                                    <span class="error">@error('percentage') {{ $message }} @enderror</span>
+                                                </div>
+                                            </div>
+
+
                                             <div class="form-group row">
                                                 <label class="col-sm-3 control-label">Description </label>
                                                 <div class="col-sm-9">

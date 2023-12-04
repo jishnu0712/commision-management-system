@@ -26,14 +26,22 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                <label class="col-sm-3 control-label">Default Percentage <span class="input_required">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="percentage" class="form-control @error('name') is-invalid @enderror" required placeholder="Department" value="{{ $department->percentage }}">
+
+                                                    <span class="error">@error('dept_name') {{ $message }} @enderror</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <label class="col-sm-3 control-label">Description </label>
                                                 <div class="col-sm-9">
-                                                   <textarea rows="5" class="form-control" name="description" placeholder="Description">{{ $department->description }}</textarea>
-                                                   <span class="error">@error('description') {{ $message }} @enderror</span>
+                                                    <textarea rows="5" class="form-control" name="description" placeholder="Description">{{ $department->description }}</textarea>
+                                                    <span class="error">@error('description') {{ $message }} @enderror</span>
                                                 </div>
-                                             </div>
+                                            </div>
 
-                                            
+
                                         </div>
                                     </div>
                                     <div class="box-footer">

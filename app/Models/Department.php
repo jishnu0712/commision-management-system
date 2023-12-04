@@ -10,7 +10,7 @@ use App\Models\Transaction;
 class Department extends Model
 {
     use HasFactory;
-    protected $fillable = ['dept_name', 'description'];
+    protected $fillable = ['dept_name', 'description', 'percentage'];
 
 
     public function percentage()
