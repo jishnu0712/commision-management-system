@@ -53,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/edit/{user_id}', [CreateUserController::class, 'edit'])->name('user.edit');
     Route::post('/user/update/permission', [CreateUserController::class, 'permission'])->name('user.permission');
     Route::post('/user/delete', [CreateUserController::class, 'delete'])->name('user.delete');
+    Route::get('/user/download', [CreateUserController::class, 'download'])->name('user.download');
 
     // DEPARTMENTS ROUTES 
     Route::get('/department', [DepartmentController::class, 'index'])->name('department.index');

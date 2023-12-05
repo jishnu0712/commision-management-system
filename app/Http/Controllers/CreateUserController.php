@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use PDF;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -180,5 +180,16 @@ class CreateUserController extends Controller
         $user->delete();
 
         return response()->json(['status' => 'success', 'msg' => 'User deleted successfully']);
+    }
+
+    public function download(Request $request)
+    {
+        $users = User::get()->toArray();
+        $data= [
+            'users' => $users,
+        ];
+        $pdf = PDF::loadView('pdf.userdownload', $data);
+        // $pdf->save(storage_path('temp.pdf')); // Save the PDF for testing
+        return $pdf->download('All_users.pdf');
     }
 }

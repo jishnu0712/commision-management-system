@@ -11,39 +11,12 @@
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-12" style="margin-bottom:15px;">
                             <h3 style="float:left;">Users</h3>
-                            <button onClick="add_new_banner()" type="button" class="waves-effect waves-light btn btn-light search_button" style="float: right;">Search</button>
+                            <a class="btn btn-primary printButton float-right" href="{{ route('user.download') }}">
+                                <i class="fa fa-print"></i>
+                                Print All Users
+                            </a>
                         </div>
-                        <div id="add_new_banner" class="col-xl-12 col-lg-12 col-12">
-                            <div class="box">
-                                <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
-                                    <div class="row search_advnced" style="padding: 20px;">
-                                        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-                                            <div class="form-group">
-                                                <label>Name</label><input type="text" name="name" value="{{ request('name') }}" class="form-control" placeholder="Name" />
 
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-                                            <div class="form-group">
-                                                <label>Email</label><input type="email" name="email" value="{{ request('email') }}" class="form-control" placeholder="Email" />
-
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-                                            <div class="form-group">
-                                                <label>Mobile</label><input type="number" maxlength="10" name="mobile" value="{{ request('mobile') }}" class="form-control" placeholder="Mobile" />
-
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-12 col-lg-4 col-xl-3">
-                                            <div class="form-group">
-                                                <label>&nbsp;</label><button type="submit" class="btn btn-success btn-block">Search</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
                         <div class="col-12">
                             {{-- error --}}
                             <div class="box">
