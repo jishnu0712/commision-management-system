@@ -21,14 +21,13 @@ class DashboardController extends Controller
             ->groupBy('doctors.id', 'doctors.name', 'doctors.mobile', 'doctors.email', 'doctors.address', 'doctors.gender', 'doctors.specialization', 'profile_pic', 'doctors.hospital_name', 'doctors.created_at', 'doctors.updated_at') // Group by all selected columns
             ->orderBy('total_amount', 'desc');
 
-        if ($request->has('name') && !empty($request->name)) {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
-        if ($request->has('email') && !empty($request->email)) {
-            $query->where('email', $request->email);
-        }
-        if ($request->has('mobile') && !empty($request->mobile)) {
-            $query->where('mobile', $request->mobile);
+        if ($request->has('text') && !empty($request->text)) {
+            $query->where('name', 'like', '%' . $request->text . '%');
+            // $query->orWhere('email', 'like', '%' . $request->text . '%');
+            $query->orWhere('mobile', 'like', '%' . $request->text . '%');
+            $query->orWhere('address', 'like', '%' . $request->text . '%');
+            // $query->orWhere('specialization', 'like', '%' . $request->text . '%');
+            $query->orWhere('hospital_name', 'like', '%' . $request->text . '%');
         }
 
         $doctors = $query->paginate(10);

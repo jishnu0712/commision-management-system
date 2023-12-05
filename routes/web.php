@@ -79,6 +79,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaction/department', [TransactionController::class, 'department'])->name('transaction.department');
     Route::get('/transaction/view/{doctor_id}', [TransactionController::class, 'view'])->name('transaction.view');
     Route::get('/transaction/download', [TransactionController::class, 'download'])->name('transaction.download');
+    Route::get('/transaction/edit', [TransactionController::class, 'edit'])->name('transaction.edit');
+    Route::post('/transaction/update', [TransactionController::class, 'update'])->name('transaction.update');
 
     // PASSWORD ROUTE
     Route::get('/password', [PasswordController::class, 'index'])->name('password.index');

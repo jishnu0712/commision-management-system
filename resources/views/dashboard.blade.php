@@ -6,17 +6,17 @@
                 <!-- Main content -->
                 <section class="content">
                     @if (in_array('dashboard_view', json_decode(auth()->user()->permissions)))
-                        @include('include.dashboard.adminview')
+                    @include('include.dashboard.adminview')
                     @else
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="box">
-                                    <div class="box-body">
-                                        <h2 class="text-center">Welcome - {{ auth()->user()->name }}</h2>
-                                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box">
+                                <div class="box-body">
+                                    <h2 class="text-center">Welcome - {{ auth()->user()->name }}</h2>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     @endif
 
                 </section>
@@ -50,9 +50,9 @@
                 }
             </script>
             @foreach ($doctors as $doctor)
-                <script>
-                    getMultiChart('{{ $doctor->id }}', JSON.parse('{!! $monthsArr[$doctor->id] !!}'), JSON.parse('{!! $commissionsArr[$doctor->id] !!}'));
-                </script>
+            <script>
+                getMultiChart('{{ $doctor->id }}', JSON.parse('{!! $monthsArr[$doctor->id] !!}'), JSON.parse('{!! $commissionsArr[$doctor->id] !!}'));
+            </script>
             @endforeach
 
             {{-- BAR CHART --}}
@@ -83,6 +83,19 @@
                     });
                 }
             </script>
+
+
+            // <script>
+            //     $(document).ready(function() {
+            //         $("#searchForm").on('submit', function(e) {
+            //             e.preventDefault();
+
+            //             let $this = $(this);
+            //             let searchText = $this.find('input').val();
+            //         });
+            //     });
+            // </script>
+
         </x-slot>
     </x-slot>
 </x-layout>

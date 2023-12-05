@@ -8,7 +8,6 @@ use App\Models\Bill;
 use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\DoctorPayment;
-use App\Models\Percentage;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -183,5 +182,41 @@ class TransactionController extends Controller
         $pdf = PDF::loadView('pdf.template', $data);
 
         return $pdf->download('All_inovoices.pdf');
+    }
+
+    public function edit(Request $request) {
+        if ($request->has('month') && !empty($request->month)) {
+            $month = CustomHelper::dateFormat('m', $request->month);
+            $year = CustomHelper::dateFormat('Y', $request->month);
+        } else {
+            $month = date('m');
+            $year = date('Y');
+        }
+
+        $invoices = Doctor::has('bill')
+            ->with(['bill' => function ($query) use ($month, $year) {
+                $query->has('transaction.department')
+                    ->whereMonth('bill_date', $month)
+                    ->whereYear('bill_date', $year);
+            }])
+            ->get();
+
+
+        $newMonth = CustomHelper::dateFormat('F', $year . '-' . $month);
+
+        return view('admin.transaction.edit', compact('invoices', 'newMonth', 'year', 'month'));
+
+    }
+
+    public function update(Request $request){
+        $transaction = Transaction::find($request->id);
+        if(!$transaction){
+            return response()->json(["status" => 'error', "msg" => 'Transaction not found!']);
+        }
+        $transaction->amount = $request->value;
+        $transaction->commission = ($request->value * $transaction->percentage) / 100;
+        $transaction->save();
+
+        return response()->json(["status" => 'success', "msg" => 'Transaction updated successfully.']);
     }
 }

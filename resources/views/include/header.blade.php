@@ -174,7 +174,7 @@
                 </li>
             @endif
 
-            @if (in_array('tranaction_view', $userPermission) || in_array('tranaction_add', $userPermission))
+            @if (in_array('tranaction_view', $userPermission) || in_array('tranaction_add', $userPermission) || in_array('tranaction_edit', $userPermission))
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-rupee"><span class="path1"></span><span class="path2"></span></i>
@@ -193,6 +193,12 @@
                         @if (in_array('tranaction_add', $userPermission))
                             <li><a href="{{ route('transaction.create') }}"><i class="icon-Commit"><span
                                             class="path1"></span><span class="path2"></span></i>Add Transaction</a>
+                            </li>
+                        @endif
+
+                        @if (in_array('tranaction_edit', $userPermission))
+                            <li><a href="{{ route('transaction.edit') }}"><i class="icon-Commit"><span
+                                            class="path1"></span><span class="path2"></span></i>Edit Transaction</a>
                             </li>
                         @endif
                     </ul>

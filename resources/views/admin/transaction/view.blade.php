@@ -102,7 +102,7 @@
                             </div>
 
                             <div class="col-xl-12 col-lg-12 col-12 pl-5">
-                                <h3>Revenue & Commission</h3>
+                                <h3>Revenue & Commission (Monthly)</h3>
                             </div>
                             <div class="row">
                                 <div class="col-12">
