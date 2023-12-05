@@ -9,7 +9,8 @@ use App\Http\Controllers\{
     DoctorController,
     LogoutController,
     LoginController,
-    PasswordController
+    PasswordController,
+    ProfileController
 };
 
 /*
@@ -39,6 +40,10 @@ Route::get('/logout', [LogoutController::class, 'index'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     // DASHBOARD ROUTE
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    // PROFILR ROUTES
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
     // USER ROUTES 
     Route::get('/user', [CreateUserController::class, 'index'])->name('user.index');
