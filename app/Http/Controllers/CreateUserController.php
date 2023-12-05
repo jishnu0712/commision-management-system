@@ -184,10 +184,11 @@ class CreateUserController extends Controller
 
     public function download(Request $request)
     {
-        $users = User::get()->toArray();
-        $data= [
+        $users = User::take(20)->get()->toArray();
+        $data = [
             'users' => $users,
         ];
+        
         $pdf = PDF::loadView('pdf.userdownload', $data);
         // $pdf->save(storage_path('temp.pdf')); // Save the PDF for testing
         return $pdf->download('All_users.pdf');

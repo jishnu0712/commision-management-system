@@ -71,6 +71,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/doctor/delete', [DoctorController::class, 'delete'])->name('doctor.delete');
     Route::get('/doctor/edit/{doctor_id}', [DoctorController::class, 'edit'])->name('doctor.edit');
     Route::post('/doctor/payment', [DoctorController::class, 'payment'])->name('doctor.payment');
+    Route::get('/doctor/download', [DoctorController::class, 'download'])->name('doctor.download');
 
     // TRANSACTION ROUTES 
     Route::get('/transaction', [TransactionController::class, 'index'])->name('transaction.index');

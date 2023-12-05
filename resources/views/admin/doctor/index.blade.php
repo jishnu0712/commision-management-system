@@ -57,6 +57,7 @@
                             {{-- error --}}
                             <div class="box">
                                 <div class="box-body">
+                                    <a href="{{ route('doctor.download') }}" target="_blank">Download All Doctors</a>
                                     <div class="table-responsive-ipad overflow-auto">
                                         <table id="doctors-table" class="table table-striped table-hover">
                                             <thead class="thead-light">

@@ -9,6 +9,7 @@ use App\Models\Percentage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use PDF;
 
 
 class DoctorController extends Controller
@@ -211,5 +212,18 @@ class DoctorController extends Controller
         $user = Doctor::find($doctor);
         $user->delete();
         return response()->json(['status' => 'success', 'msg' => 'Doctor deleted successfully']);
+    }
+
+    public function download(Request $request)
+    {
+        $doctors = Doctor::get()->toArray();
+
+        $data = [
+            'doctors' => $doctors,
+        ];
+        return view('pdf.doctordownload', $data);
+        // $pdf = PDF::loadView('pdf.doctordownload', $data);
+        // $pdf->save(storage_path('temp11.pdf')); // Save the PDF for testing
+        // return $pdf->download('All_Doctors.pdf');
     }
 }
