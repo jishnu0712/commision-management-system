@@ -83,7 +83,7 @@ class TransactionController extends Controller
         return redirect()->route('transaction.create')->with('success', 'Transaction saved successfully');
     }
 
-    public function view($doctor_id)
+    public function view(Request $request, $doctor_id)
     {
         // Get all transaction details using doctor_id
 
@@ -95,7 +95,15 @@ class TransactionController extends Controller
         }
 
         // get 12 months revenue, grouped by month
-        $currentYear = date('Y');
+        if ($request->has('month') && !empty($request->month)) {
+            $currentMonth = CustomHelper::dateFormat('m', $request->month);
+            $currentYear = CustomHelper::dateFormat('Y', $request->month);
+        } else {
+            $currentYear = date('Y');
+            $currentMonth = date('m');
+        }
+
+
         $transactions = Transaction::select(
             DB::raw('SUM(transactions.amount) as total_amount'),
             DB::raw('SUM(transactions.commission) as commission'),
@@ -124,7 +132,32 @@ class TransactionController extends Controller
         $payments = DoctorPayment::where('doctor_id', $doctor_id)->where('year', $currentYear);
         $payments = $payments->pluck('month')->all();
 
-        return view('admin.transaction.view', compact('payments', 'transactions', 'doctor', 'commissions', 'months', 'totalAmount'));
+        // DEPARTMRNT WISE CHART DATA
+        $transactionsDept = Transaction::select(
+            DB::raw('SUM(transactions.amount) as total_amount'),
+            DB::raw('SUM(transactions.commission) as commission'),
+            DB::raw('departments.dept_name'),
+        )
+            ->leftJoin('bills', 'bills.id', '=', 'transactions.bill_id')
+            ->leftJoin('departments', 'departments.id', '=', 'transactions.dept_id')
+            ->where('bills.doctor_id', $doctor_id)
+            ->whereYear('bills.bill_date', $currentYear)
+            ->whereMonth('bills.bill_date', $currentMonth)
+            // ->groupBy(DB::raw('MONTHNAME(bills.bill_date)'))
+            ->groupBy('departments.dept_name')
+            ->orderBy(DB::raw('MONTH(bills.bill_date)'))
+            ->get();
+        $commissionsDept = $transactionsDept->pluck('commission')->all();
+        $commissionsDept = json_encode($commissionsDept);
+
+        $totalAmountDept = $transactionsDept->pluck('total_amount')->all();
+        $totalAmountDept = json_encode($totalAmountDept);
+
+        $deptName = $transactionsDept->pluck('dept_name')->all();
+        $deptName = json_encode($deptName);
+
+        
+        return view('admin.transaction.view', compact('payments', 'transactions', 'doctor', 'commissions', 'months', 'totalAmount', 'commissionsDept', 'totalAmountDept', 'deptName', 'currentYear', 'currentMonth'));
     }
 
     public function invoice(Request $request)
@@ -184,7 +217,8 @@ class TransactionController extends Controller
         // return $pdf->download('All_inovoices.pdf');
     }
 
-    public function edit(Request $request) {
+    public function edit(Request $request)
+    {
         if ($request->has('month') && !empty($request->month)) {
             $month = CustomHelper::dateFormat('m', $request->month);
             $year = CustomHelper::dateFormat('Y', $request->month);
@@ -205,12 +239,12 @@ class TransactionController extends Controller
         $newMonth = CustomHelper::dateFormat('F', $year . '-' . $month);
 
         return view('admin.transaction.edit', compact('invoices', 'newMonth', 'year', 'month'));
-
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $transaction = Transaction::find($request->id);
-        if(!$transaction){
+        if (!$transaction) {
             return response()->json(["status" => 'error', "msg" => 'Transaction not found!']);
         }
         $transaction->amount = $request->value;
@@ -220,9 +254,10 @@ class TransactionController extends Controller
         return response()->json(["status" => 'success', "msg" => 'Transaction updated successfully.']);
     }
 
-    public function delete(Request $request){
+    public function delete(Request $request)
+    {
         $transaction = Transaction::find($request->deleteid);
-        if(!$transaction){
+        if (!$transaction) {
             return response()->json(["status" => 'error', "msg" => 'Transaction not found!']);
         }
         $transaction->delete();

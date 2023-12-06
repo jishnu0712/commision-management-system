@@ -116,6 +116,30 @@
                                 </div>
                             </div>
 
+                            <div class="col-xl-12 col-lg-12 col-12 pl-5">
+                                <h3>Revenue & Commission (Department wise)</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    {{-- error --}}
+                                    <div class="box">
+                                    <div class="box-header with-border">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="month" id="month" class="form-control" value="{{ date($currentYear . '-' . $currentMonth) }}">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                        <div class="box-body">
+                                            <!-- chart -->
+                                            <canvas id="barChartDeptWise" height="110"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </section>
@@ -172,6 +196,32 @@
                     });
                 }
 
+                if ($('#barChartDeptWise').length) {
+                    var ctx = document.getElementById("barChartDeptWise").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: {!! $deptName !!},
+                            datasets: [{
+                                label: 'Revenue',
+                                data: {!! $totalAmountDept !!},
+                                backgroundColor: "#ff2fa0"
+                            }, {
+                                label: 'Commission',
+                                data: {!! $commissionsDept !!},
+                                backgroundColor: "#5e72e4"
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    barPercentage: .7
+                                }]
+                            }
+                        }
+                    });
+                }
+
 
                 // DOCTOR PAYMENT
                 $(".markAsPaid").on('click', function(e) {
@@ -203,8 +253,13 @@
                     });
 
                 });
+
+                $("#month").on('change', function(e) {
+                    window.location.href = `?month=${$(this).val()}`;
+                })
             </script>
 
         </x-slot>
+        
     </x-slot>
 </x-layout>
