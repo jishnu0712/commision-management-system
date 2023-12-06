@@ -6,7 +6,8 @@
                 <!-- Main content -->
                 <section class="content">
                     @include('alert.alert')
-                    <form method="post" id="addItemForm" action="{{ route('transaction.store') }}" enctype="multipart/form-data">
+                    <form method="post" id="addItemForm" action="{{ route('transaction.store') }}"
+                        enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-xl-12 col-12">
                                 <div class="box">
@@ -20,14 +21,17 @@
                                             <div class="row col-md-12">
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="control-label">Select Doctor<span class="input_required">*</span></label>
-                                                        <select name="doctor_id" class="select2" required id="doctorDropdown">
+                                                        <label class="control-label">Select Doctor<span
+                                                                class="input_required">*</span></label>
+                                                        <select name="doctor_id" class="select2" required
+                                                            id="doctorDropdown">
                                                             <option value="">Select Doctor</option>
                                                             @foreach ($doctors as $doctor)
-                                                            <option value="{{ $doctor->id }}">{{ $doctor->name }}
-                                                                -
-                                                                ({{ $doctor->address }}) - ({{ $doctor->mobile }})
-                                                            </option>
+                                                                <option value="{{ $doctor->id }}">{{ $doctor->name }}
+                                                                    -
+                                                                    ({{ $doctor->address }})
+                                                                    - ({{ $doctor->mobile }})
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -36,21 +40,25 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Patient Name</label>
-                                                        <input type="text" name="patient_name" class="form-control" required placeholder="Patient Name">
+                                                        <input type="text" name="patient_name" class="form-control"
+                                                            required placeholder="Patient Name">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Bill No</label>
-                                                        <input type="text" name="bill_no" class="form-control" required placeholder="Bill No">
+                                                        <input type="text" name="bill_no" class="form-control"
+                                                            required placeholder="Bill No">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Bill Date</label>
-                                                        <input type="date" name="bill_date" class="form-control" required placeholder="Bill Date" value="{{ date('Y-m-d') }}">
+                                                        <input type="date" name="bill_date" class="form-control"
+                                                            required placeholder="Bill Date"
+                                                            value="{{ date('Y-m-d') }}">
                                                     </div>
                                                 </div>
 
@@ -61,7 +69,8 @@
                                                 <div class="col-md-5">
                                                     <div class="form-group">
                                                         <label>Select Department</label>
-                                                        <select class="form-control select2 departmentDropdown" name="department[]" style="width: 100%;" required>
+                                                        <select class="form-control select2 departmentDropdown"
+                                                            name="department[]" style="width: 100%;" required>
                                                             <option value="">Select Department</option>
                                                         </select>
                                                     </div>
@@ -70,14 +79,18 @@
                                                 <div class="col-md-5">
                                                     <div class="form-group">
                                                         <label>Amount</label>
-                                                        <input type="number" name="amount[]" class="form-control" placeholder="Amount" required>
+                                                        <input type="number" name="amount[]"
+                                                            class="form-control amountInput" placeholder="Amount"
+                                                            required>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label class="row action_name">Add</label>
-                                                        <button type="button" id="addProToTbL" class="btn btn-primary row col-md-12"><i class="fa fa-plus"></i></button>
+                                                        <button type="button" id="addProToTbL"
+                                                            class="btn btn-primary row col-md-12"><i
+                                                                class="fa fa-plus"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -85,7 +98,8 @@
                                         </div>
                                     </div>
                                     <div class="box-footer">
-                                        <button class="btn btn-rounded btn-primary" type="submit">Add</button>
+                                        <button class="btn btn-rounded btn-primary addTransaction"
+                                            type="button">Add</button>
                                     </div>
                                 </div>
                             </div>
@@ -117,28 +131,42 @@
                 $('.item_repeter_container').append($item_element);
                 $item_element.find('.select2-container').remove();
                 $item_element.find('input').val('');
+                $item_element.find('input').addClass('');
                 $item_element.find('button').removeAttr('id').addClass('remove_repeter_item');
                 $item_element.find('button i').removeClass('fa-plus').addClass('fa-minus');
                 $item_element.find('button').removeClass('btn-primary').addClass('btn-danger');
                 $item_element.find('.action_name').text('Remove');
                 $('.select2').select2();
             });
-            $(document).on("keyup", function(e) {
-                if (e.keyCode == 120) {
-                    var $item_element = $(document).find('.item_repeter_content').first().clone();
-                    $('.item_repeter_container').append($item_element);
-                    $item_element.find('.select2-container').remove();
-                    $item_element.find('input').val('');
-                    $item_element.find('button').removeAttr('id').addClass('remove_repeter_item');
-                    $item_element.find('button i').removeClass('fa-plus').addClass('fa-minus');
-                    $item_element.find('button').removeClass('btn-primary').addClass('btn-danger');
-                    $item_element.find('.action_name').text('Remove');
-                    $('.select2').select2();
+            $(document).on("keyup", ".amountInput", function(e) {
+                e.preventDefault();
+                if (e.keyCode == 13) {
+                    if ($(this).val() == '') {
+                        return false;
+                    }
+                    $("#addProToTbL").click();
+                    $('.departmentDropdown:last').select2();
+                    $('.departmentDropdown:last').select2('open');
                 }
+            });
+
+            $(document).on("change", ".departmentDropdown", function(e) {
+                e.preventDefault();
+                let input = $('.departmentDropdown:last').parent().parent().parent().find('input');
+                setTimeout(function() {
+                    input.focus();
+                }, 100);
             });
             $(document).on('click', '.remove_repeter_item', function(e) {
                 $(this).parent().parent().parent().remove();
             });
+
+
+
+            $(document).on("click", '.addTransaction', function(e) {
+                e.preventDefault();
+                $("#addItemForm").submit();
+            })
         </script>
     </x-slot>
 </x-layout>
