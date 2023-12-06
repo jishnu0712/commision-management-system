@@ -102,4 +102,12 @@ class DepartmentController extends Controller
         $user->delete();
         return response()->json(['status' => 'success', 'msg' => 'Department deleted successfully']);
     }
+
+    public function download() {
+        $departments = Department::get();
+        $data = [
+            'departments' => $departments,
+        ];
+        return view('pdf.departmentdownload', $data);
+    }
 }

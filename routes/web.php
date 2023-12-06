@@ -62,6 +62,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/department/update', [DepartmentController::class, 'update'])->name('department.update');
     Route::post('/department/delete', [DepartmentController::class, 'delete'])->name('department.delete');
     Route::get('/department/edit/{department_id}', [DepartmentController::class, 'edit'])->name('department.edit');
+    Route::get('/department/download', [DepartmentController::class, 'download'])->name('department.download');
 
     // DOCTOR ROUTES 
     Route::get('/doctor', [DoctorController::class, 'index'])->name('doctor.index');

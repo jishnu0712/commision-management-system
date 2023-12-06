@@ -11,27 +11,11 @@
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-12" style="margin-bottom:15px;">
                             <h3 style="float:left;">Departments</h3>
-                            <button onClick="add_new_banner()" type="button" class="waves-effect waves-light btn btn-light search_button" style="float: right;">Search</button>
-                        </div>
-                        <div id="add_new_banner" class="col-xl-12 col-lg-12 col-12">
-                            <div class="box">
-                                <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
-                                    <div class="row search_advnced" style="padding: 20px;">
-                                        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-                                            <div class="form-group">
-                                                <label>Department Name</label><input type="text" name="dept_name" value="{{ request('dept_name') }}" class="form-control" placeholder="Department Name" />
-
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-12 col-lg-4 col-xl-3">
-                                            <div class="form-group">
-                                                <label>&nbsp;</label><button type="submit" class="btn btn-success btn-block">Search</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                            <div class="col-md-8">
+                                <a href="{{ route('department.download') }}" class="btn btn-primary printButton float-right" target="_blank"><i class="fa fa-print"></i>Print All Departments</a>
                             </div>
                         </div>
+
                         <div class="col-12">
                             {{-- error --}}
                             <div class="box">
