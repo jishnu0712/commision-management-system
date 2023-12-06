@@ -90,7 +90,7 @@
                                                 @endphp
                                                 {{-- Display Doctor Name only once per invoice --}}
                                                 <tr class="text-center">
-                                                    <td rowspan="{{ $totalTransactionCount }}">
+                                                    <td rowspan="0">
                                                         {{ $invoice->name }}
                                                         <br>
                                                         {{ $invoice->address }}
