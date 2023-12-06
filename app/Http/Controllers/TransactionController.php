@@ -178,10 +178,10 @@ class TransactionController extends Controller
             'year' => $year,
             'month' => $month
         ];
+        return view('pdf.template', $data);
+        // $pdf = PDF::loadView('pdf.template', $data);
 
-        $pdf = PDF::loadView('pdf.template', $data);
-
-        return $pdf->download('All_inovoices.pdf');
+        // return $pdf->download('All_inovoices.pdf');
     }
 
     public function edit(Request $request) {

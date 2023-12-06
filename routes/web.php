@@ -74,7 +74,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/doctor/download', [DoctorController::class, 'download'])->name('doctor.download');
 
     // TRANSACTION ROUTES 
-    Route::get('/transaction', [TransactionController::class, 'index'])->name('transaction.index');
     Route::get('/transaction/create', [TransactionController::class, 'create'])->name('transaction.create');
     Route::get('/transaction/invoice', [TransactionController::class, 'invoice'])->name('transaction.invoice');
     Route::post('/transaction/store', [TransactionController::class, 'store'])->name('transaction.store');
