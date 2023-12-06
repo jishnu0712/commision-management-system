@@ -219,4 +219,13 @@ class TransactionController extends Controller
 
         return response()->json(["status" => 'success', "msg" => 'Transaction updated successfully.']);
     }
+
+    public function delete(Request $request){
+        $transaction = Transaction::find($request->deleteid);
+        if(!$transaction){
+            return response()->json(["status" => 'error', "msg" => 'Transaction not found!']);
+        }
+        $transaction->delete();
+        return response()->json(["status" => 'success', "msg" => 'Transaction deleted successfully.']);
+    }
 }

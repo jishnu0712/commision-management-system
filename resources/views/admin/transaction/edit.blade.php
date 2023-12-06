@@ -107,6 +107,7 @@
                                                     <td>{{ $tran->department->dept_name }}</td>
                                                     <td><input class="form-control editableAmount" amountrow="{{ $tran->id }}" type="number" value="{{ $tran->amount }}" /></td>
                                                     <td>₹ {{ $tran->commission }}</td>
+                                                    <td><button deleteid="{{ $tran->id }}" class="btn btn-danger btn-sm deleteTransaction"><i class="fa fa-trash"></i></button></td>
                                                 </tr>
                                                 @php
                                                 $commissionSum += $tran->commission;
@@ -150,7 +151,7 @@
                     window.location.href = `?month=${$(this).val()}`;
                 });
 
-                $(".editableAmount").on("blur", function(e){
+                $(".editableAmount").on("blur", function(e) {
                     let $this = $(this);
                     let value = $this.val();
                     let id = $this.attr('amountrow');
@@ -158,11 +159,41 @@
                         id,
                         value
                     }
-                    $.post("{{ route('transaction.update') }}", data, function(response, status){
+                    $.post("{{ route('transaction.update') }}", data, function(response, status) {
                         swal(response.status, response.msg, response.status);
-                        
+
                     });
                 })
+
+                $(".deleteTransaction").on("click", function(e) {
+                    e.preventDefault();
+                    let $this = $(this);
+                    let deleteid = $this.attr('deleteid');
+
+                    swal({
+                        title: "Are you sure?",
+                        text: "You will not be able to recover.",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes, delete it!",
+                        closeOnConfirm: true
+                    }, function(isConfirm) {
+                        if (isConfirm) {
+                            // Send a DELETE request to the category's delete route
+                            let data = {
+                                deleteid: deleteid
+                            };
+
+                            $.post("{{ route('transaction.delete') }}", data, function(response, status) {
+                                swal(response.status, response.msg, response.status);
+                                if(response.status == 'success'){
+                                    $this.parent().parent().css('background', 'red').fadeOut('slow');
+                                }
+                            });
+                        }
+                    });
+                });
             </script>
         </x-slot>
     </x-slot>
