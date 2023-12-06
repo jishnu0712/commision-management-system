@@ -80,6 +80,7 @@
                                                     <th>Department</th>
                                                     <th>Bill Amount</th>
                                                     <th>Commission</th>
+                                                    <th>Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
