@@ -69,7 +69,7 @@
                                         if (count($invoice->bill) < 1) { continue; } @endphp <table class="table table-bordered">
                                             <thead>
                                                 <tr class="text-center">
-                                                    <th colspan="6">For the month of {{ $newMonth }}
+                                                    <th colspan="7">For the month of {{ $newMonth }}
                                                         {{ $year }} (DHULIAN NURSING HOME)
                                                     </th>
                                                 </tr>
