@@ -149,8 +149,7 @@
                                                     </tr> --}}
 
                                                 <tr class="text-center">
-                                                    <th></th>
-                                                    <th></th>
+                                                    <th colspan="2"></th>
                                                     <th>TOTAL BILL</th>
                                                     <th>₹ {{ $totalSum }}</th>
                                                     <th>TOTAL COMMISSION</th>
