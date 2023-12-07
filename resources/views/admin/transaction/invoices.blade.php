@@ -40,20 +40,42 @@
                     @include('alert.alert')
                     <div class="row">
                         <div class="col-xl-12 col-12">
+
                             <div class="box">
                                 <div class="box-header with-border">
                                     {{-- <h4 class="box-title">Invoice</h4> --}}
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <input type="month" id="month" class="form-control" value="{{ date($year . '-' . $month) }}">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <a href="{{ route('transaction.download', ['month' => request('month')]) }}" class="btn btn-primary printButton float-right" target="_blank">
-                                                <i class="fa fa-print"></i> Print
-                                            </a>
+
+                                    <form action="" method="get">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <input type="month" id="month" class="form-control" value="{{ date($year . '-' . $month) }}">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <select name="doctor_id" class="select2" id="doctorDropdown">
+                                                        <option value="">Select Doctor</option>
+                                                        @foreach ($doctors as $doctor)
+                                                        <option value="{{ $doctor->id }}">{{ $doctor->name }}
+                                                            -
+                                                            ({{ $doctor->address }})
+                                                            - ({{ $doctor->mobile }})
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="text" id="billno" name="bill_no" class="form-control" placeholder="Bill No">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button type="submit" class="btn btn-primary">Search</button>
+                                                <a href="{{ route('transaction.download', ['month' => request('month')]) }}" class="btn btn-warning printButton float-right" target="_blank">
+                                                    <i class="fa fa-print"></i> Print
+                                                </a>
+                                            </div>
 
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                                 <div class="box-body">
                                     <div class="box-body">
@@ -74,12 +96,13 @@
                                         if (count($invoice->bill) < 1) { continue; } @endphp <table class="table table-bordered">
                                             <thead>
                                                 <tr class="text-center">
-                                                    <th colspan="6">For the month of {{ $newMonth }}
+                                                    <th colspan="7">For the month of {{ $newMonth }}
                                                         {{ $year }} (DHULIAN NURSING HOME)
                                                     </th>
                                                 </tr>
                                                 <tr class="text-center">
                                                     <th>Doctor Name</th>
+                                                    <th>Bill No</th>
                                                     <th>Patient Name</th>
                                                     <th>Date</th>
                                                     <th>Department</th>
@@ -106,6 +129,7 @@
                                                 @foreach ($invoice->bill as $index => $bill)
                                                 @foreach ($bill->transaction as $tranIndex => $tran)
                                                 <tr class="text-center">
+                                                    <td>{{ $bill->bill_no }}</td>
                                                     <td>{{ $bill->patient_name }}</td>
                                                     <td>{{ CustomHelper::dateFormat('d-M-Y', $bill->bill_date) }}
                                                     </td>
@@ -125,6 +149,7 @@
                                                     </tr> --}}
 
                                                 <tr class="text-center">
+                                                    <th></th>
                                                     <th></th>
                                                     <th>TOTAL BILL</th>
                                                     <th>₹ {{ $totalSum }}</th>
@@ -151,6 +176,7 @@
         </div>
         <x-slot name="javascript">
             <script>
+                $('.select2').select2();
                 $("#month").on('change', function(e) {
                     window.location.href = `?month=${$(this).val()}`;
                 })
