@@ -68,12 +68,13 @@
                                     if (count($invoice->bill) < 1) { continue; } @endphp <table id="transactions-table" class="table table-bordered" border="1">
                                         <thead>
                                             <tr class="text-center">
-                                                <th colspan="6" style="text-align: center;">For the month of {{ $newMonth }}
+                                                <th colspan="7" style="text-align: center;">For the month of {{ $newMonth }}
                                                     {{ $year }} (DHULIAN NURSING HOME)
                                                 </th>
                                             </tr>
                                             <tr class="text-center">
                                                 <th>Doctor Name</th>
+                                                <th>Bill No</th>
                                                 <th>Patient Name</th>
                                                 <th>Date</th>
                                                 <th>Department</th>
@@ -100,6 +101,7 @@
                                             @foreach ($invoice->bill as $index => $bill)
                                             @foreach ($bill->transaction as $tranIndex => $tran)
                                             <tr class="text-center">
+                                                <td>{{ $bill->bill_no }}</td>
                                                 <td>{{ $bill->patient_name }}</td>
                                                 <td>{{ CustomHelper::dateFormat('d-M-Y', $bill->bill_date) }}
                                                 </td>

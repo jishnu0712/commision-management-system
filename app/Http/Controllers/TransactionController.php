@@ -207,10 +207,16 @@ class TransactionController extends Controller
         }
 
         $invoices = Doctor::has('bill')
-            ->with(['bill' => function ($query) use ($month, $year) {
-                $query->with('transaction.department')
+            ->with(['bill' => function ($query) use ($month, $year, $request) {
+                $query->has('transaction.department')
                     ->whereMonth('bill_date', $month)
                     ->whereYear('bill_date', $year);
+                    if ($request->has('doctor_id') && !empty($request->doctor_id)){
+                        $query->where('doctor_id', $request->doctor_id);
+                    }
+                    if ($request->has('bill_no') && !empty($request->bill_no)){
+                        $query->where('bill_no', $request->bill_no);
+                    }
             }])
             ->get();
         $newMonth = CustomHelper::dateFormat('F', $year . '-' . $month);

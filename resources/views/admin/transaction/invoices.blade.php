@@ -69,7 +69,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <button type="submit" class="btn btn-primary">Search</button>
-                                                <a href="{{ route('transaction.download', ['month' => request('month')]) }}" class="btn btn-warning printButton float-right" target="_blank">
+                                                <a href="{{ route('transaction.download', ['month' => request('month'), 'doctor_id' => request('doctor_id'), 'bill_no' => request('bill_no')]) }}" class="btn btn-warning printButton float-right" target="_blank">
                                                     <i class="fa fa-print"></i> Print
                                                 </a>
                                             </div>
